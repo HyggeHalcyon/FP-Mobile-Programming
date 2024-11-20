@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'form_create.dart';
-import 'room_details.dart'; // Import the new page
+import 'room_details.dart'; // Import the existing page
+import 'manage_room_details.dart'; // Import the new page
 
 void main() {
   runApp(const MyApp());
@@ -18,8 +19,9 @@ class MyApp extends StatelessWidget {
       ),
       home: const FormCreatePage(),
       routes: {
-        '/roomDetails': (context) =>
-            const RoomDetailsPage(), // Define the route
+        '/roomDetails': (context) => const RoomDetailsPage(), // Existing route
+        '/manageRoomDetails': (context) =>
+            const ManageRoomDetailsPage(), // New route
       },
     );
   }
