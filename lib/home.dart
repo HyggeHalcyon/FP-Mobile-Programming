@@ -11,6 +11,16 @@ class HomePage1 extends StatelessWidget {
         bool isDesktop = constraints.maxWidth > 800;
 
         return Scaffold(
+          appBar: AppBar(
+            backgroundColor: Colors.blue,
+            elevation: 0,
+            leading: IconButton(
+              icon: const Icon(Icons.arrow_back),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            ),
+          ),
           body: Stack(
             children: [
               SingleChildScrollView(
@@ -32,12 +42,12 @@ class HomePage1 extends StatelessWidget {
                             ),
                             child: Column(
                               children: [
-                                statusCard("TW-501", 1, 60, "20 November 2024",
-                                    isDesktop),
-                                statusCard("TW-401", 0, 60, "20 November 2024",
-                                    isDesktop),
-                                statusCard("TW-301", 2, 60, "20 November 2024",
-                                    isDesktop),
+                                statusCard(context, "TW-501", 1, 60,
+                                    "20 November 2024", isDesktop),
+                                statusCard(context, "TW-401", 0, 60,
+                                    "20 November 2024", isDesktop),
+                                statusCard(context, "TW-301", 2, 60,
+                                    "20 November 2024", isDesktop),
                               ],
                             ),
                           ),
@@ -151,8 +161,8 @@ class HomePage1 extends StatelessWidget {
     );
   }
 
-  Column statusCard(
-      String classroom, int status, int capacity, String date, bool isDesktop) {
+  Column statusCard(BuildContext context, String classroom, int status,
+      int capacity, String date, bool isDesktop) {
     return Column(
       children: [
         const SizedBox(height: 24),
@@ -296,7 +306,9 @@ class HomePage1 extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.pushNamed(context, '/manageRoomDetails');
+                        },
                         style: ElevatedButton.styleFrom(
                           backgroundColor:
                               const Color.fromARGB(255, 251, 188, 14),

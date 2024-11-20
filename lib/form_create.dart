@@ -5,85 +5,58 @@ class FormCreatePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: const Color(0xFFF0F0F0), // Slightly darker than white
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            // HEADER REPLACEMENT STARTS HERE
-            Container(
-              height: 260,
-              width: double.infinity,
-              decoration: const ShapeDecoration(
-                color: Color.fromARGB(255, 10, 147, 241),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(43),
-                    bottomRight: Radius.circular(43),
-                  ),
-                ),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 16,
-                ),
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        bool isDesktop = constraints.maxWidth > 800;
+
+        return Scaffold(
+          appBar: AppBar(
+            backgroundColor: Colors.blue,
+            elevation: 0,
+            leading: IconButton(
+              icon: const Icon(Icons.arrow_back),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            ),
+          ),
+          body: Stack(
+            children: [
+              SingleChildScrollView(
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const SizedBox(height: 20),
-                    const Text(
-                      'Halo!',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 28,
-                        fontFamily: 'Poppins',
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                    const SizedBox(height: 5),
-                    const Text(
-                      'Bagaimana kabarmu hari ini?',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 20,
-                        fontFamily: 'Poppins',
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                    const SizedBox(height: 20),
-                    Container(
-                      width: double.infinity,
-                      height: 50,
-                      padding: const EdgeInsets.symmetric(horizontal: 10),
-                      decoration: ShapeDecoration(
-                        color: Colors.white,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                      ),
-                      child: Row(
+                    const SizedBox(height: 300), // Tinggi header baru
+                    Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Column(
                         children: [
-                          const Icon(
-                            Icons.search,
-                            color: Colors.black,
+                          // Konten setelah header
+                          RoomCard(
+                            imagePath: 'assets/tw302.jpg',
+                            roomName: "TW-302 (Tower 1 ITS)",
+                            capacity: "60 orang",
+                            facilities: "Microphone, Speaker, LCD Projector",
+                            onTap: () {
+                              Navigator.pushNamed(context, '/roomDetails');
+                            },
                           ),
-                          const SizedBox(width: 10),
-                          Expanded(
-                            child: TextField(
-                              decoration: InputDecoration(
-                                hintText: 'Cari ruangan kamu',
-                                hintStyle: TextStyle(
-                                  color: Colors.black.withOpacity(0.6),
-                                  fontSize: 16,
-                                  fontFamily: 'Poppins',
-                                  fontWeight: FontWeight.w500,
-                                ),
-                                border: InputBorder.none,
-                                contentPadding:
-                                    const EdgeInsets.symmetric(vertical: 14),
-                              ),
-                            ),
+                          RoomCard(
+                            imagePath: 'assets/tw502.jpg',
+                            roomName: "TW-502 (Tower 1 ITS)",
+                            capacity: "60 orang",
+                            facilities: "Microphone, Speaker, LCD Projector",
+                            onTap: () {
+                              Navigator.pushNamed(context, '/roomDetails');
+                            },
+                          ),
+                          RoomCard(
+                            imagePath: 'assets/tw603.jpg',
+                            roomName: "TW-603 (Tower 1 ITS)",
+                            capacity: "60 orang",
+                            facilities: "Microphone, Speaker, LCD Projector",
+                            onTap: () {
+                              Navigator.pushNamed(context, '/roomDetails');
+                            },
                           ),
                         ],
                       ),
@@ -91,58 +64,97 @@ class FormCreatePage extends StatelessWidget {
                   ],
                 ),
               ),
-            ),
-            // HEADER REPLACEMENT ENDS HERE
-
-            const SizedBox(height: 16),
-            RoomCard(
-              imagePath: 'assets/tw302.jpg', // Replace with your asset path
-              roomName: "TW-302 (Tower 1 ITS)",
-              capacity: "60 orang",
-              facilities: "Microphone, Speaker, LCD Projector",
-              onTap: () {
-                Navigator.pushNamed(context, '/roomDetails');
-              },
-            ),
-            RoomCard(
-              imagePath: 'assets/tw502.jpg',
-              roomName: "TW-502 (Tower 1 ITS)",
-              capacity: "60 orang",
-              facilities: "Microphone, Speaker, LCD Projector",
-              onTap: () {
-                Navigator.pushNamed(context, '/roomDetails');
-              },
-            ),
-            RoomCard(
-              imagePath: 'assets/tw603.jpg',
-              roomName: "TW-603 (Tower 1 ITS)",
-              capacity: "60 orang",
-              facilities: "Microphone, Speaker, LCD Projector",
-              onTap: () {
-                Navigator.pushNamed(context, '/roomDetails');
-              },
-            ),
-            RoomCard(
-              imagePath: 'assets/research_center.jpg',
-              roomName: "Research Center",
-              capacity: "120 orang",
-              facilities: "Microphone, Speaker, LCD Projector",
-              onTap: () {
-                Navigator.pushNamed(context, '/roomDetails');
-              },
-            ),
-            RoomCard(
-              imagePath: 'assets/ged_pascasarjana.jpg',
-              roomName: "Ged. Pascasarjana",
-              capacity: "120 orang",
-              facilities: "Microphone, Speaker, LCD Screen",
-              onTap: () {
-                Navigator.pushNamed(context, '/roomDetails');
-              },
-            ),
-          ],
-        ),
-      ),
+              Positioned(
+                top: 0,
+                left: 0,
+                right: 0,
+                child: Container(
+                  height: isDesktop ? 280 : 260,
+                  width: double.infinity,
+                  decoration: const ShapeDecoration(
+                    color: Color.fromARGB(255, 10, 147, 241),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.only(
+                        bottomLeft: Radius.circular(43),
+                        bottomRight: Radius.circular(43),
+                      ),
+                    ),
+                  ),
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: isDesktop ? 100 : 16,
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const SizedBox(height: 20), // Tambahkan jarak dari atas
+                        const Text(
+                          'Halo!',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 28,
+                            fontFamily: 'Poppins',
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                        const SizedBox(height: 5),
+                        const Text(
+                          'Bagaimana kabarmu hari ini?',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 20,
+                            fontFamily: 'Poppins',
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                        const SizedBox(height: 20),
+                        Container(
+                          width: double.infinity,
+                          height: 50,
+                          padding: const EdgeInsets.symmetric(horizontal: 10),
+                          decoration: ShapeDecoration(
+                            color: Colors.white,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                          ),
+                          child: Row(
+                            children: [
+                              const Icon(
+                                Icons.search,
+                                color: Colors.black,
+                              ),
+                              const SizedBox(width: 10),
+                              Expanded(
+                                child: TextField(
+                                  decoration: InputDecoration(
+                                    hintText: 'Cari ruangan kamu',
+                                    hintStyle: TextStyle(
+                                      color: Colors.black.withOpacity(0.6),
+                                      fontSize: 16,
+                                      fontFamily: 'Poppins',
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                    border: InputBorder.none,
+                                    contentPadding: const EdgeInsets.symmetric(
+                                      vertical: 14,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        );
+      },
     );
   }
 }
