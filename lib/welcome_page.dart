@@ -1,4 +1,4 @@
-import 'package:its_rent_hub/home_page.dart';
+import 'package:its_rent_hub/home.dart';
 import 'package:flutter/material.dart';
 
 class WelcomePage extends StatelessWidget {
@@ -72,7 +72,8 @@ class WelcomePage extends StatelessWidget {
                     // Aksi tombol
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => const HomePage()),
+                      MaterialPageRoute(
+                          builder: (context) => const HomePage1()),
                     );
                   },
                   style: ElevatedButton.styleFrom(
