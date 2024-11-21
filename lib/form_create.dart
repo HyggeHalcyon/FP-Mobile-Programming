@@ -25,12 +25,18 @@ class FormCreatePage extends StatelessWidget {
               SingleChildScrollView(
                 child: Column(
                   children: [
-                    const SizedBox(height: 200), // Tinggi header baru
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height *
+                          0.28, // Match header height
+                    ),
+                    const SizedBox(
+                        height:
+                            16), // Add padding between header and room cards
                     Padding(
                       padding: const EdgeInsets.all(16.0),
                       child: Column(
                         children: [
-                          // Konten setelah header
+                          // Room Cards
                           RoomCard(
                             imagePath: 'assets/tw302.jpg',
                             roomName: "TW-302 (Tower 1 ITS)",
@@ -58,6 +64,24 @@ class FormCreatePage extends StatelessWidget {
                               Navigator.pushNamed(context, '/roomDetails');
                             },
                           ),
+                          RoomCard(
+                            imagePath: 'assets/ged_pascasarjana.jpg',
+                            roomName: "Gedung Pascasarjana",
+                            capacity: "60 orang",
+                            facilities: "Microphone, Speaker, LCD Projector",
+                            onTap: () {
+                              Navigator.pushNamed(context, '/roomDetails');
+                            },
+                          ),
+                          RoomCard(
+                            imagePath: 'assets/research_center.jpg',
+                            roomName: "Research Center ITS",
+                            capacity: "60 orang",
+                            facilities: "Microphone, Speaker, LCD Projector",
+                            onTap: () {
+                              Navigator.pushNamed(context, '/roomDetails');
+                            },
+                          ),
                         ],
                       ),
                     ),
@@ -69,7 +93,8 @@ class FormCreatePage extends StatelessWidget {
                 left: 0,
                 right: 0,
                 child: Container(
-                  height: isDesktop ? 280 : 200,
+                  height: MediaQuery.of(context).size.height *
+                      0.28, // 26% of screen height
                   width: double.infinity,
                   decoration: const ShapeDecoration(
                     color: Color.fromARGB(255, 10, 147, 241),
