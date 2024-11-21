@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:its_rent_hub/form_create.dart';
+import 'package:its_rent_hub/manage_room_details.dart';
 
 class HomePage1 extends StatelessWidget {
   const HomePage1({super.key});
@@ -339,7 +340,12 @@ class HomePage1 extends StatelessWidget {
                     children: [
                       ElevatedButton(
                         onPressed: () {
-                          Navigator.pushNamed(context, '/manageRoomDetails');
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    const ManageRoomDetailsPage()),
+                          );
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor:

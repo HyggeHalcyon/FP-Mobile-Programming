@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:its_rent_hub/room_details.dart';
 
 class FormCreatePage extends StatelessWidget {
   const FormCreatePage({super.key});
@@ -23,69 +24,92 @@ class FormCreatePage extends StatelessWidget {
           body: Stack(
             children: [
               SingleChildScrollView(
-                child: Column(
-                  children: [
-                    SizedBox(
-                      height: MediaQuery.of(context).size.height *
-                          0.28, // Match header height
-                    ),
-                    const SizedBox(
-                        height:
-                            16), // Add padding between header and room cards
-                    Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Column(
-                        children: [
-                          // Room Cards
-                          RoomCard(
-                            imagePath: 'assets/tw302.jpg',
-                            roomName: "TW-302 (Tower 1 ITS)",
-                            capacity: "60 orang",
-                            facilities: "Microphone, Speaker, LCD Projector",
-                            onTap: () {
-                              Navigator.pushNamed(context, '/roomDetails');
-                            },
-                          ),
-                          RoomCard(
-                            imagePath: 'assets/tw502.jpg',
-                            roomName: "TW-502 (Tower 1 ITS)",
-                            capacity: "60 orang",
-                            facilities: "Microphone, Speaker, LCD Projector",
-                            onTap: () {
-                              Navigator.pushNamed(context, '/roomDetails');
-                            },
-                          ),
-                          RoomCard(
-                            imagePath: 'assets/tw603.jpg',
-                            roomName: "TW-603 (Tower 1 ITS)",
-                            capacity: "60 orang",
-                            facilities: "Microphone, Speaker, LCD Projector",
-                            onTap: () {
-                              Navigator.pushNamed(context, '/roomDetails');
-                            },
-                          ),
-                          RoomCard(
-                            imagePath: 'assets/ged_pascasarjana.jpg',
-                            roomName: "Gedung Pascasarjana",
-                            capacity: "60 orang",
-                            facilities: "Microphone, Speaker, LCD Projector",
-                            onTap: () {
-                              Navigator.pushNamed(context, '/roomDetails');
-                            },
-                          ),
-                          RoomCard(
-                            imagePath: 'assets/research_center.jpg',
-                            roomName: "Research Center ITS",
-                            capacity: "60 orang",
-                            facilities: "Microphone, Speaker, LCD Projector",
-                            onTap: () {
-                              Navigator.pushNamed(context, '/roomDetails');
-                            },
-                          ),
-                        ],
+                child: Padding(
+                  // Tambahkan padding atas agar tidak tertutupi header biru
+                  padding: EdgeInsets.only(
+                      top: isDesktop ? 280 : 200, bottom: 16), // Responsif
+                  child: Column(
+                    children: [
+                      // Konten daftar ruangan
+                      Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Column(
+                          children: [
+                            RoomCard(
+                              imagePath: 'assets/tw302.jpg',
+                              roomName: "TW-302 (Tower 1 ITS)",
+                              capacity: "60 orang",
+                              facilities: "Microphone, Speaker, LCD Projector",
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          const RoomDetailsPage()),
+                                );
+                              },
+                            ),
+                            RoomCard(
+                              imagePath: 'assets/tw502.jpg',
+                              roomName: "TW-502 (Tower 1 ITS)",
+                              capacity: "60 orang",
+                              facilities: "Microphone, Speaker, LCD Projector",
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          const RoomDetailsPage()),
+                                );
+                              },
+                            ),
+                            RoomCard(
+                              imagePath: 'assets/tw603.jpg',
+                              roomName: "TW-603 (Tower 1 ITS)",
+                              capacity: "60 orang",
+                              facilities: "Microphone, Speaker, LCD Projector",
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          const RoomDetailsPage()),
+                                );
+                              },
+                            ),
+                            RoomCard(
+                              imagePath: 'assets/research_center.jpg',
+                              roomName: "Research Center",
+                              capacity: "120 orang",
+                              facilities: "Microphone, Speaker, LCD Projector",
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          const RoomDetailsPage()),
+                                );
+                              },
+                            ),
+                            RoomCard(
+                              imagePath: 'assets/ged_pascasarjana.jpg',
+                              roomName: "Ged. Pascasarjana",
+                              capacity: "120 orang",
+                              facilities: "Microphone, Speaker, LCD Screen",
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          const RoomDetailsPage()),
+                                );
+                              },
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
               Positioned(
@@ -238,9 +262,12 @@ class RoomCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: onTap,
+      onTap: () {
+        debugPrint("Navigating to RoomDetails for $roomName");
+        onTap();
+      },
       child: Card(
-        color: Colors.white, // Make the card white
+        color: Colors.white,
         margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10),
