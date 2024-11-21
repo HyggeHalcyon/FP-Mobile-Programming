@@ -117,7 +117,8 @@ class FormCreatePage extends StatelessWidget {
                 left: 0,
                 right: 0,
                 child: Container(
-                  height: isDesktop ? 280 : 200,
+                  height: MediaQuery.of(context).size.height *
+                      0.28, // 26% of screen height
                   width: double.infinity,
                   decoration: const ShapeDecoration(
                     color: Color.fromARGB(255, 10, 147, 241),
