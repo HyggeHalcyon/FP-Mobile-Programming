@@ -40,13 +40,17 @@ class RoomDetailsPage extends StatelessWidget {
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 28,
+                        fontFamily: 'Poppins',
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                     SizedBox(height: 8),
                     Text(
                       "Yuk, booking ruangan di sini!",
-                      style: TextStyle(color: Colors.white, fontSize: 18),
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontFamily: 'Poppins',
+                          fontSize: 18),
                     ),
                   ],
                 ),
@@ -60,23 +64,38 @@ class RoomDetailsPage extends StatelessWidget {
                   const SizedBox(height: 16),
                   const Text(
                     "Lokasi: Gedung Research Center",
-                    style: TextStyle(fontSize: 16),
+                    style: TextStyle(fontSize: 16, fontFamily: 'Poppins'),
                   ),
                   const SizedBox(height: 8),
                   const Text(
                     "Kapasitas: 120",
-                    style: TextStyle(fontSize: 16),
+                    style: TextStyle(fontSize: 16, fontFamily: 'Poppins'),
                   ),
                   const SizedBox(height: 8),
                   const Text(
                     "Fasilitas:",
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                    style: TextStyle(
+                        fontSize: 16,
+                        fontFamily: 'Poppins',
+                        fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(height: 4),
-                  const Text("• Microphone"),
-                  const Text("• LCD Screen"),
-                  const Text("• Speaker"),
-                  const Text("• Microphone"),
+                  const Text("• Microphone",
+                      style: TextStyle(
+                        fontFamily: 'Poppins',
+                      )),
+                  const Text("• LCD Screen",
+                      style: TextStyle(
+                        fontFamily: 'Poppins',
+                      )),
+                  const Text("• Speaker",
+                      style: TextStyle(
+                        fontFamily: 'Poppins',
+                      )),
+                  const Text("• Microphone",
+                      style: TextStyle(
+                        fontFamily: 'Poppins',
+                      )),
                   const SizedBox(height: 16),
                   Card(
                     color: Colors.white,
@@ -93,6 +112,7 @@ class RoomDetailsPage extends StatelessWidget {
                             "Cek Ketersediaan",
                             style: TextStyle(
                               fontSize: 18,
+                              fontFamily: 'Poppins',
                               fontWeight: FontWeight.bold,
                             ),
                           ),
@@ -105,6 +125,9 @@ class RoomDetailsPage extends StatelessWidget {
                                 child: TextField(
                                   decoration: InputDecoration(
                                     hintText: "Tanggal Mulai (DD/MM/YYYY)",
+                                    hintStyle: const TextStyle(
+                                      fontFamily: 'Poppins',
+                                    ),
                                     border: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(16.0),
                                     ),
@@ -116,6 +139,9 @@ class RoomDetailsPage extends StatelessWidget {
                                 child: TextField(
                                   decoration: InputDecoration(
                                     hintText: "HH:MM",
+                                    hintStyle: const TextStyle(
+                                      fontFamily: 'Poppins',
+                                    ),
                                     border: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(16.0),
                                     ),
@@ -133,6 +159,9 @@ class RoomDetailsPage extends StatelessWidget {
                                 child: TextField(
                                   decoration: InputDecoration(
                                     hintText: "Hingga Tanggal (DD/MM/YYYY)",
+                                    hintStyle: const TextStyle(
+                                      fontFamily: 'Poppins',
+                                    ),
                                     border: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(16.0),
                                     ),
@@ -144,6 +173,9 @@ class RoomDetailsPage extends StatelessWidget {
                                 child: TextField(
                                   decoration: InputDecoration(
                                     hintText: "HH:MM",
+                                    hintStyle: const TextStyle(
+                                      fontFamily: 'Poppins',
+                                    ),
                                     border: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(16.0),
                                     ),
@@ -178,7 +210,9 @@ class RoomDetailsPage extends StatelessWidget {
                       child: const Text(
                         "Ajukan Peminjaman",
                         style: TextStyle(
-                            fontSize: 16, fontWeight: FontWeight.bold),
+                            fontSize: 16,
+                            fontFamily: 'Poppins',
+                            fontWeight: FontWeight.bold),
                       ),
                     ),
                   ),

@@ -32,6 +32,7 @@ class HomePage extends StatelessWidget {
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: isDesktop ? 28 : 20, // Responsif
+                          fontFamily: 'Poppins',
                           fontWeight: FontWeight.bold,
                         ),
                         overflow: TextOverflow.ellipsis, // Hindari overflow
@@ -41,6 +42,7 @@ class HomePage extends StatelessWidget {
                         'Bagaimana kabarmu hari ini?',
                         style: TextStyle(
                           color: Colors.white70,
+                          fontFamily: 'Poppins',
                           fontSize: isDesktop ? 16 : 14, // Responsif
                         ),
                         overflow: TextOverflow.ellipsis, // Hindari overflow
@@ -194,6 +196,7 @@ class HomePage extends StatelessWidget {
                             room,
                             style: TextStyle(
                               fontSize: isDesktop ? 20 : 16, // Responsif
+                              fontFamily: 'Poppins',
                               fontWeight: FontWeight.bold,
                             ),
                           ),
@@ -202,6 +205,7 @@ class HomePage extends StatelessWidget {
                             'Kapasitas: $capacity',
                             style: TextStyle(
                               fontSize: isDesktop ? 16 : 14, // Responsif
+                              fontFamily: 'Poppins',
                               color: Colors.grey[600],
                             ),
                           ),
@@ -209,6 +213,7 @@ class HomePage extends StatelessWidget {
                             'Tanggal: $date',
                             style: TextStyle(
                               fontSize: isDesktop ? 16 : 14, // Responsif
+                              fontFamily: 'Poppins',
                               color: Colors.grey[600],
                             ),
                           ),
@@ -250,6 +255,7 @@ class HomePage extends StatelessWidget {
                         style: TextStyle(
                           color: Colors.orange,
                           fontSize: isDesktop ? 14 : 12, // Responsif
+                          fontFamily: 'Poppins',
                         ),
                       ),
                     ),

@@ -30,6 +30,7 @@ class LoginPage extends StatelessWidget {
                       const Text(
                         "Selamat Datang di",
                         style: TextStyle(
+                          fontFamily: 'Poppins',
                           fontSize: 20,
                         ),
                       ),
@@ -40,6 +41,7 @@ class LoginPage extends StatelessWidget {
                             "myITS",
                             style: TextStyle(
                               fontSize: 42,
+                              fontFamily: 'Poppins',
                               fontWeight: FontWeight.w700,
                             ),
                           ),
@@ -47,6 +49,7 @@ class LoginPage extends StatelessWidget {
                             "RentHub",
                             style: TextStyle(
                               fontSize: 23,
+                              fontFamily: 'Poppins',
                               fontWeight: FontWeight.w700,
                             ),
                           ),
@@ -57,6 +60,7 @@ class LoginPage extends StatelessWidget {
                         "Pinjam Ruangan Jadi Makin Mudah!",
                         style: TextStyle(
                           fontSize: 16,
+                          fontFamily: 'Poppins',
                           fontWeight: FontWeight.w700,
                         ),
                       ),
@@ -89,6 +93,7 @@ class LoginPage extends StatelessWidget {
                                         "myITS",
                                         style: TextStyle(
                                           fontSize: 25,
+                                          fontFamily: 'Poppins',
                                           fontWeight: FontWeight.w700,
                                           color: Colors.white,
                                         ),
@@ -97,7 +102,8 @@ class LoginPage extends StatelessWidget {
                                         "Single sign-on",
                                         style: TextStyle(
                                           fontSize: 10,
-                                          fontWeight: FontWeight.w700,
+                                          fontFamily: 'Poppins',
+                                          fontWeight: FontWeight.w200,
                                           color: Colors.white,
                                         ),
                                       ),
@@ -138,6 +144,7 @@ class LoginPage extends StatelessWidget {
                                     "Sign In",
                                     style: TextStyle(
                                       fontSize: 14,
+                                      fontFamily: 'Poppins',
                                       color: Colors.black,
                                     ),
                                   ),
@@ -154,6 +161,7 @@ class LoginPage extends StatelessWidget {
                                     "Forgot Password?",
                                     style: TextStyle(
                                       fontSize: 14,
+                                      fontFamily: 'Poppins',
                                       color: Colors.white,
                                     ),
                                   ),
@@ -168,6 +176,7 @@ class LoginPage extends StatelessWidget {
                         "EN",
                         style: TextStyle(
                           fontSize: 14,
+                          fontFamily: 'Poppins',
                           fontWeight: FontWeight.w700,
                         ),
                       ),
