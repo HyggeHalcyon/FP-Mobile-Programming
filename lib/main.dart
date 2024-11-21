@@ -4,6 +4,7 @@ import 'package:its_rent_hub/home.dart';
 import 'package:its_rent_hub/manage_room_details.dart';
 import 'package:its_rent_hub/room_details.dart';
 import 'package:its_rent_hub/welcome_page.dart';
+import 'package:its_rent_hub/login.dart';
 
 void main() {
   runApp(const MyApp());
@@ -19,6 +20,7 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
         '/': (context) => const WelcomePage(),
+        '/login': (context) => const LoginPage(),
         '/home': (context) => const HomePage1(),
         '/form': (context) => const FormCreatePage(),
         '/roomDetails': (context) => const RoomDetailsPage(),

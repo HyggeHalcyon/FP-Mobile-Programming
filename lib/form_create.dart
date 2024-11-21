@@ -25,7 +25,7 @@ class FormCreatePage extends StatelessWidget {
               SingleChildScrollView(
                 child: Column(
                   children: [
-                    const SizedBox(height: 300), // Tinggi header baru
+                    const SizedBox(height: 200), // Tinggi header baru
                     Padding(
                       padding: const EdgeInsets.all(16.0),
                       child: Column(
@@ -69,7 +69,7 @@ class FormCreatePage extends StatelessWidget {
                 left: 0,
                 right: 0,
                 child: Container(
-                  height: isDesktop ? 280 : 260,
+                  height: isDesktop ? 280 : 200,
                   width: double.infinity,
                   decoration: const ShapeDecoration(
                     color: Color.fromARGB(255, 10, 147, 241),
@@ -84,69 +84,104 @@ class FormCreatePage extends StatelessWidget {
                     padding: EdgeInsets.symmetric(
                       horizontal: isDesktop ? 100 : 16,
                     ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const SizedBox(height: 20), // Tambahkan jarak dari atas
-                        const Text(
-                          'Halo!',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 28,
-                            fontFamily: 'Poppins',
-                            fontWeight: FontWeight.w700,
-                          ),
-                        ),
-                        const SizedBox(height: 5),
-                        const Text(
-                          'Bagaimana kabarmu hari ini?',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 20,
-                            fontFamily: 'Poppins',
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                        const SizedBox(height: 20),
-                        Container(
-                          width: double.infinity,
-                          height: 50,
-                          padding: const EdgeInsets.symmetric(horizontal: 10),
-                          decoration: ShapeDecoration(
-                            color: Colors.white,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                          ),
-                          child: Row(
-                            children: [
-                              const Icon(
-                                Icons.search,
-                                color: Colors.black,
-                              ),
-                              const SizedBox(width: 10),
-                              Expanded(
-                                child: TextField(
-                                  decoration: InputDecoration(
-                                    hintText: 'Cari ruangan kamu',
-                                    hintStyle: TextStyle(
-                                      color: Colors.black.withOpacity(0.6),
-                                      fontSize: 16,
-                                      fontFamily: 'Poppins',
-                                      fontWeight: FontWeight.w500,
-                                    ),
-                                    border: InputBorder.none,
-                                    contentPadding: const EdgeInsets.symmetric(
-                                      vertical: 14,
-                                    ),
+                    child: LayoutBuilder(
+                      builder: (context, constraints) {
+                        double screenWidth = constraints.maxWidth;
+                        bool isSmallScreen = screenWidth < 600;
+
+                        return Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const SizedBox(height: 20),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                // Greeting Text
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        'Halo!',
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: isSmallScreen ? 20 : 28,
+                                          fontFamily: 'Poppins',
+                                          fontWeight: FontWeight.w700,
+                                        ),
+                                      ),
+                                      const SizedBox(height: 5),
+                                      Text(
+                                        'Bagaimana kabarmu hari ini?',
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: isSmallScreen ? 16 : 20,
+                                          fontFamily: 'Poppins',
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ),
+                                const SizedBox(
+                                    width: 10), // Space between text and avatar
+                                // Avatar
+                                CircleAvatar(
+                                  radius: isSmallScreen
+                                      ? 20
+                                      : 30, // Responsive size
+                                  backgroundColor: Colors.white,
+                                  backgroundImage:
+                                      const AssetImage('assets/profile.jpg'),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 20),
+                            // Search Bar
+                            Container(
+                              width: double.infinity,
+                              height: 50,
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 10),
+                              decoration: ShapeDecoration(
+                                color: Colors.white,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(20),
+                                ),
                               ),
-                            ],
-                          ),
-                        ),
-                      ],
+                              child: Row(
+                                children: [
+                                  const Icon(
+                                    Icons.search,
+                                    color: Colors.black,
+                                  ),
+                                  const SizedBox(width: 10),
+                                  Expanded(
+                                    child: TextField(
+                                      decoration: InputDecoration(
+                                        hintText: 'Cari ruangan kamu',
+                                        hintStyle: TextStyle(
+                                          color: Colors.black.withOpacity(0.6),
+                                          fontSize: isSmallScreen ? 14 : 16,
+                                          fontFamily: 'Poppins',
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                        border: InputBorder.none,
+                                        contentPadding:
+                                            const EdgeInsets.symmetric(
+                                                vertical: 14),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        );
+                      },
                     ),
                   ),
                 ),

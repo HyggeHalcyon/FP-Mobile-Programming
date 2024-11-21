@@ -79,8 +79,8 @@ class HomePage extends StatelessWidget {
                   ),
                 ],
               ),
-              child: const Row(
-                children: [
+              child: Row(
+                children: const [
                   Icon(Icons.search, color: Colors.grey),
                   SizedBox(width: 10),
                   Expanded(

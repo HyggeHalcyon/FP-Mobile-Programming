@@ -31,9 +31,9 @@ class ManageRoomDetailsPage extends StatelessWidget {
                     bottomRight: Radius.circular(16),
                   ),
                 ),
-                child: const Column(
+                child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
+                  children: const [
                     Text(
                       "Research Center",
                       style: TextStyle(

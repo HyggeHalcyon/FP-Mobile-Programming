@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:its_rent_hub/home.dart';
 
 class RoomDetailsPage extends StatelessWidget {
   const RoomDetailsPage({super.key});
@@ -31,9 +32,9 @@ class RoomDetailsPage extends StatelessWidget {
                     bottomRight: Radius.circular(16),
                   ),
                 ),
-                child: const Column(
+                child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
+                  children: const [
                     Text(
                       "Research Center",
                       style: TextStyle(
@@ -159,7 +160,14 @@ class RoomDetailsPage extends StatelessWidget {
                   SizedBox(
                     width: double.infinity,
                     child: ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        // Aksi tombol
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const HomePage1()),
+                        );
+                      },
                       style: ElevatedButton.styleFrom(
                         padding: const EdgeInsets.symmetric(vertical: 16.0),
                         backgroundColor: Colors.blue,
