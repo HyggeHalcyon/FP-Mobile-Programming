@@ -1,0 +1,50 @@
+[
+    {
+        "room_id": "83cfbe58-d689-4c82-a4c4-94d8fbc48312",
+        "name": "Microphone"
+    },
+    {
+        "room_id": "83cfbe58-d689-4c82-a4c4-94d8fbc48312",
+        "name": "Speaker"
+    },
+    {
+        "room_id": "83cfbe58-d689-4c82-a4c4-94d8fbc48312",
+        "name": "LCD Projector"
+    },
+    {
+        "room_id": "b97601b4-3603-459d-8731-253adc592a51",
+        "name": "Microphone"
+    },
+    {
+        "room_id": "b97601b4-3603-459d-8731-253adc592a51",
+        "name": "Speaker"
+    },
+    {
+        "room_id": "b97601b4-3603-459d-8731-253adc592a51",
+        "name": "LCD Projector"
+    },
+    {
+        "room_id": "a680a9ed-bb95-48b6-89be-c970754fb500",
+        "name": "Microphone"
+    },
+    {
+        "room_id": "a680a9ed-bb95-48b6-89be-c970754fb500",
+        "name": "Speaker"
+    },
+    {
+        "room_id": "a680a9ed-bb95-48b6-89be-c970754fb500",
+        "name": "LCD Projector"
+    },
+    {
+        "room_id": "897a4e2d-dbfa-4f94-a2f3-b77be94320a1",
+        "name": "Microphone"
+    },
+    {
+        "room_id": "897a4e2d-dbfa-4f94-a2f3-b77be94320a1",
+        "name": "Speaker"
+    },
+    {
+        "room_id": "897a4e2d-dbfa-4f94-a2f3-b77be94320a1",
+        "name": "LCD Projector"
+    }
+]

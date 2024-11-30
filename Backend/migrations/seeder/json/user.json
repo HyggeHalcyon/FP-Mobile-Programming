@@ -1,0 +1,26 @@
+[
+  {
+    "id": "d7698c0f-a978-4b76-96f7-aa9cf0304bff",
+    "name": "admin",
+    "nrp": "0",
+    "password": "SuperSecurePassword",
+    "is_verified": true,
+    "role_id": "0da109e0-83ba-4588-8a71-6e265a434769" 
+  },
+  {
+    "id": "8b609f50-e266-4e28-abbb-270bb15ce170",
+    "name": "user1",
+    "nrp": "5026270000",
+    "password": "SuperSecurePassword",
+    "is_verified": true,
+    "role_id": "7688c0e9-78ef-4d06-b6ee-77807b526fed" 
+  },
+  {
+    "id": "09940b44-a3a2-48fc-af59-eeec111ddb77",
+    "name": "user2",
+    "nrp": "5026270001",
+    "password": "SuperSecurePassword",
+    "is_verified": true,
+    "role_id": "7688c0e9-78ef-4d06-b6ee-77807b526fed" 
+  }
+]

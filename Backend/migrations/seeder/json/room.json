@@ -1,0 +1,38 @@
+[
+    {
+        "id": "83cfbe58-d689-4c82-a4c4-94d8fbc48312",
+        "name": "Gedung Pascasarjana",
+        "capacity": 120,
+        "start_hour": 0,
+        "start_minute": 0,
+        "end_hour": 23,
+        "end_minute": 59
+    },
+    {
+        "id": "b97601b4-3603-459d-8731-253adc592a51",
+        "name": "Teater A",
+        "capacity": 100,
+        "start_hour": 0,
+        "start_minute": 0,
+        "end_hour": 23,
+        "end_minute": 59        
+    },
+    {
+        "id": "a680a9ed-bb95-48b6-89be-c970754fb500",
+        "name": "Pusat Robotika ITS",
+        "capacity": 2000,
+        "start_hour": 0,
+        "start_minute": 0,
+        "end_hour": 23,
+        "end_minute": 59 
+    },
+    {
+        "id": "897a4e2d-dbfa-4f94-a2f3-b77be94320a1",
+        "name": "Research Center",
+        "capacity": 2000,
+        "start_hour": 0,
+        "start_minute": 0,
+        "end_hour": 23,
+        "end_minute": 59 
+    }
+]
