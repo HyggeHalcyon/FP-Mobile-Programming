@@ -12,7 +12,7 @@ import (
 type (
 	UserService interface {
 		VerifyLogin(ctx context.Context, nrp string, password string) (entity.User, error)
-		Me(ctx context.Context, userId string, userRole string) (dto.UserResponse, error)
+		Me(ctx context.Context, userID string, userRole string) (dto.UserResponse, error)
 	}
 
 	userService struct {
@@ -40,8 +40,8 @@ func (s *userService) VerifyLogin(ctx context.Context, email string, password st
 	return user, nil
 }
 
-func (s *userService) Me(ctx context.Context, userId string, userRole string) (dto.UserResponse, error) {
-	user, err := s.userRepo.GetUserById(userId)
+func (s *userService) Me(ctx context.Context, userID string, userRole string) (dto.UserResponse, error) {
+	user, err := s.userRepo.GetUserById(userID)
 	if err != nil {
 		return dto.UserResponse{}, dto.ErrGetUserById
 	}

@@ -23,9 +23,9 @@ func NewUserRepository(db *gorm.DB) UserRepository {
 	}
 }
 
-func (r *userRepository) GetUserById(userId string) (entity.User, error) {
+func (r *userRepository) GetUserById(userID string) (entity.User, error) {
 	var user entity.User
-	if err := r.db.Where("id = ?", userId).Take(&user).Error; err != nil {
+	if err := r.db.Where("id = ?", userID).Take(&user).Error; err != nil {
 		return entity.User{}, err
 	}
 	return user, nil

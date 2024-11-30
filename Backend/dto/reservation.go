@@ -22,7 +22,9 @@ var (
 	ErrInvalidTimeFormat           = errors.New("invalid time format")
 	ErrRoomNotAvailable            = errors.New("room not available")
 	ErrEndDateMustBeAfterStartDate = errors.New("end date must be after start date")
-	ErrStartDateBeforeNow          = errors.New("start date must be after now")
+	ErrStartDateMustBeFuture       = errors.New("start date must be in the future")
+	ErrOtherUserReservation        = errors.New("unable to operate on other user reservation")
+	ErrPastReservation             = errors.New("unable to operate on past reservation")
 )
 
 type (
@@ -30,8 +32,14 @@ type (
 		Available bool `json:"available"`
 	}
 
-	ReservationRequest struct {
-		ID        string `json:"id"`
+	CreateReservationRequest struct {
+		ID        string `json:"id" binding:"required"`
+		StartDate string `json:"start_date" binding:"required"`
+		EndDate   string `json:"end_date" binding:"required"`
+	}
+
+	UpdateReservationRequest struct {
+		ID        string `json:"id" binding:"required"`
 		StartDate string `json:"start_date"`
 		EndDate   string `json:"end_date"`
 	}
@@ -39,8 +47,8 @@ type (
 	ReservationResponse struct {
 		ID        string `json:"id"`
 		RoomID    string `json:"room_id"`
-		UserID    string `json:"user_id"`
-		StartDate string `json:"start_date"`
-		EndDate   string `json:"end_date"`
+		UserID    string `json:"user_id,omitempty"`
+		StartDate string `json:"start_date,omitempty"`
+		EndDate   string `json:"end_date,omitempty"`
 	}
 )

@@ -27,9 +27,9 @@ func NewRoomController(rs service.RoomService) RoomController {
 }
 
 func (c *roomController) GetDetail(ctx *gin.Context) {
-	userId := ctx.Param("id")
+	userID := ctx.Param("id")
 
-	result, err := c.roomService.GetDetailsByID(userId)
+	result, err := c.roomService.GetDetailsByID(userID)
 	if err != nil {
 		res := utils.BuildResponseFailed(dto.MESSAGE_FAILED_GET_ROOM, err.Error(), nil)
 		ctx.AbortWithStatusJSON(http.StatusBadRequest, res)

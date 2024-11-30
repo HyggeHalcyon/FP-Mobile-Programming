@@ -43,7 +43,6 @@ func main() {
 	routes.Room(server, roomController, jwtService)
 	routes.Reservation(server, reservationController, jwtService)
 
-	// database seeding, update existing data or create if not found
 	if err := seeder.RunSeeders(db); err != nil {
 		log.Fatalf("error migration seeder: %v", err)
 		return

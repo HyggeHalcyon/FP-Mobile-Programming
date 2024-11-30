@@ -11,10 +11,10 @@ import (
 func Reservation(route *gin.Engine, reservationController controller.ReservationController, jwtService config.JWTService) {
 	routes := route.Group("/api/reservation")
 	{
-		routes.POST("/check", middleware.Authenticate(jwtService))
+		// routes.POST("/check", middleware.Authenticate(jwtService))
 		routes.POST("", middleware.Authenticate(jwtService), reservationController.CreateReservation)
-		routes.GET("/:id", middleware.Authenticate(jwtService))
-		routes.PATCH("", middleware.Authenticate(jwtService))
-		routes.DELETE("/:id", middleware.Authenticate(jwtService))
+		routes.GET("/:id", middleware.Authenticate(jwtService), reservationController.GetDetails)
+		routes.PATCH("", middleware.Authenticate(jwtService), reservationController.UpdateReservation)
+		routes.DELETE("/:id", middleware.Authenticate(jwtService), reservationController.DeleteReservation)
 	}
 }

@@ -58,10 +58,10 @@ func (c *userController) Login(ctx *gin.Context) {
 }
 
 func (c *userController) Me(ctx *gin.Context) {
-	userId := ctx.MustGet(constants.CTX_KEY_USER_ID).(string)
+	userID := ctx.MustGet(constants.CTX_KEY_USER_ID).(string)
 	userRole := ctx.MustGet(constants.CTX_KEY_ROLE_NAME).(string)
 
-	result, err := c.userService.Me(ctx.Request.Context(), userId, userRole)
+	result, err := c.userService.Me(ctx.Request.Context(), userID, userRole)
 	if err != nil {
 		res := utils.BuildResponseFailed(dto.MESSAGE_FAILED_GET_USER, err.Error(), nil)
 		ctx.JSON(http.StatusBadRequest, res)
