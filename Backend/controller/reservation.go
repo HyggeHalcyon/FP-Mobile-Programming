@@ -12,6 +12,7 @@ import (
 
 type (
 	ReservationController interface {
+		GetMyReservations(*gin.Context)
 		CheckAvailability(*gin.Context)
 		CreateReservation(*gin.Context)
 		UpdateReservation(*gin.Context)
@@ -28,6 +29,20 @@ func NewReservationController(rs service.ReservationService) ReservationControll
 	return &reservationController{
 		reservationService: rs,
 	}
+}
+
+func (c *reservationController) GetMyReservations(ctx *gin.Context) {
+	userID := ctx.MustGet(constants.CTX_KEY_USER_ID).(string)
+
+	result, err := c.reservationService.GetMyReservations(userID)
+	if err != nil {
+		res := utils.BuildResponseFailed(dto.MESSAGE_FAILED_GET_RESERVATION, err.Error(), nil)
+		ctx.AbortWithStatusJSON(http.StatusBadRequest, res)
+		return
+	}
+
+	res := utils.BuildResponseSuccess(dto.MESSAGE_SUCCESS_GET_RESERVATION, result)
+	ctx.JSON(http.StatusOK, res)
 }
 
 func (c *reservationController) CheckAvailability(ctx *gin.Context) {

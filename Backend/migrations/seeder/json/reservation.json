@@ -1,0 +1,34 @@
+[
+    {
+        "id": "d7f60f44-975a-4276-8ad6-ef30a4253ad8",
+        "user_id": "d7698c0f-a978-4b76-96f7-aa9cf0304bff",
+        "room_id": "897a4e2d-dbfa-4f94-a2f3-b77be94320a1",
+        "status": "Accepted",
+        "start_date": "2024-11-30 15:00",
+        "end_date": "2024-11-30 18:00"
+    },
+    {
+        "id": "2a997540-6a8e-4cc3-a066-a4f344f58567",
+        "user_id": "d7698c0f-a978-4b76-96f7-aa9cf0304bff",
+        "room_id": "83cfbe58-d689-4c82-a4c4-94d8fbc48312",
+        "status": "Pending",
+        "start_date": "2024-12-21 15:00",
+        "end_date": "2024-12-21 20:00"
+    },
+    {
+        "id": "be84799e-77c8-41a8-b0c0-b3fbeca22512",
+        "user_id": "d7698c0f-a978-4b76-96f7-aa9cf0304bff",
+        "room_id": "b97601b4-3603-459d-8731-253adc592a51",
+        "status": "Rejected",
+        "start_date": "2024-07-04 17:00",
+        "end_date": "2024-07-04 19:00"
+    },
+    {
+        "id": "bbf063b2-fd07-43cc-8339-b228a7b300e6",
+        "user_id": "d7698c0f-a978-4b76-96f7-aa9cf0304bff",
+        "room_id": "a680a9ed-bb95-48b6-89be-c970754fb500",
+        "status": "Accepted",
+        "start_date": "2025-01-02 11:00",
+        "end_date": "2025-01-02 14:00"
+    }
+]

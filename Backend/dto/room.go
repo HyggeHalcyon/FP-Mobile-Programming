@@ -9,17 +9,19 @@ const (
 )
 
 type (
-	RoomResponse struct {
-		ID          string `json:"id"`
-		Name        string `json:"name"`
-		Capacity    int    `json:"capacity"`
-		Availbility string `json:"availbility"`
+	RoomListResponse struct {
+		ID         string   `json:"id"`
+		Name       string   `json:"name"`
+		Capacity   int      `json:"capacity"`
+		Picture    string   `json:"picture"`
+		Facilities []string `json:"facilities"`
 	}
 
 	RoomDetailResponse struct {
 		ID         string   `json:"id"`
 		Name       string   `json:"name"`
 		Capacity   int      `json:"capacity"`
+		Location   string   `json:"location"`
 		Facilities []string `json:"facilities"`
 	}
 )

@@ -13,6 +13,7 @@ func Reservation(route *gin.Engine, reservationController controller.Reservation
 	{
 		// routes.POST("/check", middleware.Authenticate(jwtService))
 		routes.POST("", middleware.Authenticate(jwtService), reservationController.CreateReservation)
+		routes.GET("", middleware.Authenticate(jwtService), reservationController.GetMyReservations)
 		routes.GET("/:id", middleware.Authenticate(jwtService), reservationController.GetDetails)
 		routes.PATCH("", middleware.Authenticate(jwtService), reservationController.UpdateReservation)
 		routes.DELETE("/:id", middleware.Authenticate(jwtService), reservationController.DeleteReservation)

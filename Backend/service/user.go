@@ -47,9 +47,10 @@ func (s *userService) Me(ctx context.Context, userID string, userRole string) (d
 	}
 
 	return dto.UserResponse{
-		ID:   user.ID.String(),
-		Name: user.Name,
-		Role: userRole,
-		NRP:  user.NRP,
+		ID:             user.ID.String(),
+		Name:           user.Name,
+		Role:           userRole,
+		NRP:            user.NRP,
+		ProfilePicture: user.ProfilePicture,
 	}, nil
 }

@@ -13,6 +13,7 @@ type (
 	ReservationService interface {
 		CheckAvailability(dto.CreateReservationRequest) (dto.ReservationAvailabilityResponse, error)
 		MakeReservation(string, dto.CreateReservationRequest) (dto.ReservationResponse, error)
+		GetMyReservations(string) ([]dto.MyReservationResponse, error)
 		Update(string, dto.UpdateReservationRequest) (dto.ReservationResponse, error)
 		GetDetails(string) (dto.ReservationResponse, error)
 		Delete(string, string) error
@@ -29,6 +30,38 @@ func NewReservationService(rr1 repository.RoomRepository, rr2 repository.Rerserv
 		reservationRepo: rr2,
 		roomRepo:        rr1,
 	}
+}
+
+func (s *reservationService) GetMyReservations(userID string) ([]dto.MyReservationResponse, error) {
+	reserves, err := s.reservationRepo.GetByUserID(userID)
+	if err != nil {
+		return nil, err
+	}
+
+	var ret []dto.MyReservationResponse
+	for i, r := range reserves {
+		if time.Now().After(r.StartDate) && r.Status == dto.ENUM_RESERVATION_STATUS_ACCEPTED {
+			reserves[i].Status = dto.ENUM_RESERVATION_STATUS_COMPLETED
+		}
+
+		// prolly more effective to get the room by joining in one query when getting the reserves but i cant be bothered atm
+		room, err := s.roomRepo.GetByID(r.RoomID.String())
+		if err != nil {
+			return nil, err
+		}
+
+		ret = append(ret, dto.MyReservationResponse{
+			ID:        reserves[i].ID.String(),
+			RoomName:  room.Name,
+			RoomPic:   room.Picture,
+			Status:    reserves[i].Status,
+			Capacity:  room.Capacity,
+			StartDate: reserves[i].StartDate.Format(dto.RESERVATION_TIME_FORMAT),
+			EndDate:   reserves[i].EndDate.Format(dto.RESERVATION_TIME_FORMAT),
+		})
+	}
+
+	return ret, nil
 }
 
 func (s *reservationService) CheckAvailability(req dto.CreateReservationRequest) (dto.ReservationAvailabilityResponse, error) {
@@ -50,20 +83,20 @@ func (s *reservationService) CheckAvailability(req dto.CreateReservationRequest)
 		return dto.ReservationAvailabilityResponse{}, dto.ErrEndDateMustBeAfterStartDate
 	}
 
-	room, err := s.roomRepo.GetByID(req.ID)
-	if err != nil {
-		return dto.ReservationAvailabilityResponse{}, err
-	}
+	// room, err := s.roomRepo.GetByID(req.ID)
+	// if err != nil {
+	// 	return dto.ReservationAvailabilityResponse{}, err
+	// }
 
-	if room.StartHour > startDate.Hour() || room.EndHour < endDate.Hour() {
-		return dto.ReservationAvailabilityResponse{
-			Available: false,
-		}, nil
-	} else if room.StartMinute > startDate.Minute() || room.EndMinute < endDate.Minute() {
-		return dto.ReservationAvailabilityResponse{
-			Available: false,
-		}, nil
-	}
+	// if room.StartHour > startDate.Hour() || room.EndHour < endDate.Hour() {
+	// 	return dto.ReservationAvailabilityResponse{
+	// 		Available: false,
+	// 	}, nil
+	// } else if room.StartMinute > startDate.Minute() || room.EndMinute < endDate.Minute() {
+	// 	return dto.ReservationAvailabilityResponse{
+	// 		Available: false,
+	// 	}, nil
+	// }
 
 	// TODO
 	// reservations, err := s.reservationRepo.GetByIDAndAfterStartDate(req.ID, startDate)

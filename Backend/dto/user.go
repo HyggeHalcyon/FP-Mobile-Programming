@@ -27,10 +27,11 @@ type (
 	}
 
 	UserResponse struct {
-		ID     string `json:"id"`
-		Name   string `json:"name"`
-		NRP    string `json:"nrp"`
-		RoleID string `json:"role_id,omitempty"`
-		Role   string `json:"role,omitempty"`
+		ID             string `json:"id"`
+		Name           string `json:"name"`
+		NRP            string `json:"nrp"`
+		RoleID         string `json:"role_id,omitempty"`
+		Role           string `json:"role,omitempty"`
+		ProfilePicture string `json:"profile_picture"`
 	}
 )

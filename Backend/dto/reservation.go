@@ -16,6 +16,11 @@ const (
 	MESSAGE_SUCCESS_DELETE_RESERVATION = "success delete reservation"
 
 	RESERVATION_TIME_FORMAT = "2006-01-02 15:04"
+
+	ENUM_RESERVATION_STATUS_ACCEPTED  = "Accepted"
+	ENUM_RESERVATION_STATUS_PENDING   = "Pending"
+	ENUM_RESERVATION_STATUS_REJECTED  = "Rejected"
+	ENUM_RESERVATION_STATUS_COMPLETED = "Completed"
 )
 
 var (
@@ -44,10 +49,21 @@ type (
 		EndDate   string `json:"end_date"`
 	}
 
+	MyReservationResponse struct {
+		ID        string `json:"id"`
+		Status    string `json:"status"`
+		RoomName  string `json:"room_name"`
+		RoomPic   string `json:"room_pic"`
+		Capacity  int    `json:"capacity"`
+		StartDate string `json:"start_date,omitempty"`
+		EndDate   string `json:"end_date,omitempty"`
+	}
+
 	ReservationResponse struct {
 		ID        string `json:"id"`
 		RoomID    string `json:"room_id"`
 		UserID    string `json:"user_id,omitempty"`
+		Status    string `json:"status"`
 		StartDate string `json:"start_date,omitempty"`
 		EndDate   string `json:"end_date,omitempty"`
 	}

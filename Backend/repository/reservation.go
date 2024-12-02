@@ -10,6 +10,7 @@ import (
 type (
 	RerservationRepository interface {
 		GetByID(string) (entity.Reservation, error)
+		GetByUserID(string) ([]entity.Reservation, error)
 		GetByIDAndAfterStartDate(string, time.Time) ([]entity.Reservation, error)
 		Create(entity.Reservation) (entity.Reservation, error)
 		Update(entity.Reservation) error
@@ -25,6 +26,16 @@ func NewReservationRepository(db *gorm.DB) RerservationRepository {
 	return &reservationRepository{
 		db: db,
 	}
+}
+
+func (r *reservationRepository) GetByUserID(userID string) ([]entity.Reservation, error) {
+	var reservation []entity.Reservation
+
+	if err := r.db.Where("user_id = ?", userID).Find(&reservation).Error; err != nil {
+		return nil, err
+	}
+
+	return reservation, nil
 }
 
 func (r *reservationRepository) GetByIDAndAfterStartDate(roomID string, start time.Time) ([]entity.Reservation, error) {

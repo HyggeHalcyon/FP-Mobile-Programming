@@ -3,13 +3,14 @@ package service
 import (
 	"Tekber-BE/dto"
 	"Tekber-BE/repository"
-	"fmt"
+
+	"gorm.io/gorm"
 )
 
 type (
 	RoomService interface {
 		GetDetailsByID(string) (dto.RoomDetailResponse, error)
-		GetAll() ([]dto.RoomResponse, error)
+		GetAll() ([]dto.RoomListResponse, error)
 	}
 
 	roomService struct {
@@ -40,6 +41,7 @@ func (s *roomService) GetDetailsByID(id string) (dto.RoomDetailResponse, error) 
 		ID:       room.ID.String(),
 		Name:     room.Name,
 		Capacity: room.Capacity,
+		Location: room.Location,
 	}
 
 	for _, facility := range facilities {
@@ -49,19 +51,31 @@ func (s *roomService) GetDetailsByID(id string) (dto.RoomDetailResponse, error) 
 	return response, nil
 }
 
-func (s *roomService) GetAll() ([]dto.RoomResponse, error) {
+func (s *roomService) GetAll() ([]dto.RoomListResponse, error) {
 	rooms, err := s.roomRepo.GetAll()
 	if err != nil {
 		return nil, err
 	}
 
-	var response []dto.RoomResponse
+	var response []dto.RoomListResponse
 	for _, room := range rooms {
-		response = append(response, dto.RoomResponse{
-			ID:          room.ID.String(),
-			Name:        room.Name,
-			Capacity:    room.Capacity,
-			Availbility: fmt.Sprintf("%02d:%02d - %02d:%02d", room.StartHour, room.StartMinute, room.EndHour, room.EndMinute),
+		facilities, err := s.facilityRepo.GetByRoomID(room.ID.String())
+		if err != nil && err != gorm.ErrRecordNotFound {
+			return nil, err
+		}
+
+		facility_str_arr := []string{}
+
+		for _, facility := range facilities {
+			facility_str_arr = append(facility_str_arr, facility.Name)
+		}
+
+		response = append(response, dto.RoomListResponse{
+			ID:         room.ID.String(),
+			Name:       room.Name,
+			Capacity:   room.Capacity,
+			Picture:    room.Picture,
+			Facilities: facility_str_arr,
 		})
 	}
 

@@ -2,6 +2,7 @@ package main
 
 import (
 	"log"
+	"net/http"
 	"os"
 
 	"Tekber-BE/config"
@@ -38,6 +39,11 @@ func main() {
 
 	server := gin.Default()
 	server.Use(middleware.CORSMiddleware())
+	filegroup := server.Group("/api/file")
+	{
+		filegroup.Use(middleware.Authenticate(jwtService))
+		filegroup.StaticFS("", http.Dir("./files"))
+	}
 
 	routes.User(server, userController, jwtService)
 	routes.Room(server, roomController, jwtService)
