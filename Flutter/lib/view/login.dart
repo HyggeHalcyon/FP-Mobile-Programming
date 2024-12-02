@@ -1,12 +1,31 @@
 import 'package:flutter/material.dart';
-import 'package:its_rent_hub/home.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:its_rent_hub/api/auth.dart';
+import 'package:its_rent_hub/models/auth.dart';
+import 'package:its_rent_hub/view/home.dart';
 
-void main() {
-  runApp(const LoginPage());
+class LoginPage extends StatefulWidget {
+  const LoginPage({super.key});
+
+  @override
+  _LoginPageState createState() => _LoginPageState();
 }
 
-class LoginPage extends StatelessWidget {
-  const LoginPage({Key? key}) : super(key: key);
+class _LoginPageState extends State<LoginPage> {
+  final nrpForm = TextEditingController();
+  final passwordForm = TextEditingController();
+
+  @override
+  void initState(){
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    nrpForm.dispose();
+    passwordForm.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -112,10 +131,9 @@ class LoginPage extends StatelessWidget {
                                 ],
                               ),
                               const SizedBox(height: 20),
-                              _buildTextField(label: "myITS ID"),
+                              _buildTextField(label: "myITS ID", controller: nrpForm),
                               const SizedBox(height: 10),
-                              _buildTextField(
-                                  label: "Password", isPassword: true),
+                              _buildTextField(label: "Password", controller: passwordForm, isPassword: true),
                               const SizedBox(height: 20),
                               Container(
                                 width: double.infinity,
@@ -132,13 +150,52 @@ class LoginPage extends StatelessWidget {
                                   ),
                                 ),
                                 child: TextButton(
-                                  onPressed: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => const HomePage1(),
-                                      ),
-                                    );
+                                  onPressed: () async {
+                                    LoginResponse? response = await AuthAPIService().login(nrpForm.text, passwordForm.text);
+                                    if (response == null) {
+                                      Fluttertoast.showToast(
+                                        msg: 'Error Making Request',
+                                        toastLength: Toast.LENGTH_LONG,
+                                        gravity: ToastGravity.CENTER,
+                                        backgroundColor: Colors.red,
+                                        textColor: Colors.white,
+                                        timeInSecForIosWeb: 2,
+                                        webPosition: "center",
+                                        webBgColor: "linear-gradient(to right, #dc1c13, #dc1c13)",
+                                      );
+                                      return;
+                                    }
+
+                                    if (response.status == true) {
+                                      Fluttertoast.showToast(
+                                        msg: 'Login Success',
+                                        toastLength: Toast.LENGTH_LONG,
+                                        gravity: ToastGravity.CENTER,
+                                        backgroundColor: Colors.green,
+                                        textColor: Colors.white,
+                                        timeInSecForIosWeb: 2,
+                                        webPosition: "center",
+                                        webBgColor: "linear-gradient(to right, #19C63C, #19C63C)",
+                                      );
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => const HomePage(),
+                                        ),
+                                      );
+                                    } else {
+                                      Fluttertoast.showToast(
+                                        msg: response.error ?? 'Login Failed',
+                                        toastLength: Toast.LENGTH_LONG,
+                                        gravity: ToastGravity.CENTER,
+                                        backgroundColor: Colors.red,
+                                        textColor: Colors.white,
+                                        timeInSecForIosWeb: 2,
+                                        webPosition: "center",
+                                        webBgColor: "linear-gradient(to right, #dc1c13, #dc1c13)",
+                                      );
+                                    }
+
                                   },
                                   child: const Text(
                                     "Sign In",
@@ -155,7 +212,16 @@ class LoginPage extends StatelessWidget {
                                 alignment: Alignment.centerLeft,
                                 child: TextButton(
                                   onPressed: () {
-                                    // Belum ada Forgot Password Page
+                                    Fluttertoast.showToast(
+                                      msg: 'Not Implemented',
+                                      toastLength: Toast.LENGTH_LONG,
+                                      gravity: ToastGravity.CENTER,
+                                      backgroundColor: Colors.red,
+                                      textColor: Colors.white,
+                                      timeInSecForIosWeb: 2,
+                                      webPosition: "center",
+                                      webBgColor: "linear-gradient(to right, #dc1c13, #dc1c13)",
+                                    );
                                   },
                                   child: const Text(
                                     "Forgot Password?",
@@ -191,8 +257,9 @@ class LoginPage extends StatelessWidget {
     );
   }
 
-  Widget _buildTextField({required String label, bool isPassword = false}) {
+  Widget _buildTextField({required String label, required TextEditingController controller, bool isPassword = false}) {
     return TextField(
+      controller: controller,
       obscureText: isPassword,
       decoration: InputDecoration(
         filled: true,

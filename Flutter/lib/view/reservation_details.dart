@@ -1,13 +1,50 @@
 import 'package:flutter/material.dart';
+import 'package:its_rent_hub/api/api_globals.dart';
+import 'package:its_rent_hub/components/availability.dart';
+import 'package:its_rent_hub/models/reservation.dart';
+import 'package:its_rent_hub/view/login.dart';
 
-class ManageRoomDetailsPage extends StatelessWidget {
-  const ManageRoomDetailsPage({super.key});
+class ReservationDetailsPage extends StatefulWidget {
+  final String reservationID;
+
+  const ReservationDetailsPage({super.key, required this.reservationID});
+
+  @override
+  _ReservationDetailsPageState createState() => _ReservationDetailsPageState();
+}
+
+class _ReservationDetailsPageState extends State<ReservationDetailsPage> {
+  MyReservationData? room;
+  var isLoaded = false;
+
+  @override
+  void initState(){
+    super.initState();
+    _getData(widget.reservationID);
+  }
+
+  void _getData(roomID) async {
+    
+  }
 
   @override
   Widget build(BuildContext context) {
+    if (isAuthenticed == false) {
+      return const LoginPage();
+    }
+
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
+        title: const Text(
+          'Reservation Details',
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 20,
+            fontFamily: 'Poppins',
+            fontWeight: FontWeight.w700,
+          ),
+        ),
         backgroundColor: Colors.blue,
         elevation: 0,
         leading: IconButton(
@@ -96,97 +133,7 @@ class ManageRoomDetailsPage extends StatelessWidget {
                         fontFamily: 'Poppins',
                       )),
                   const SizedBox(height: 16),
-                  Card(
-                    color: Colors.white,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    elevation: 4,
-                    child: Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const Text(
-                            "Cek Ketersediaan",
-                            style: TextStyle(
-                              fontSize: 18,
-                              fontFamily: 'Poppins',
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          const SizedBox(height: 16),
-                          Row(
-                            children: [
-                              const Icon(Icons.calendar_today),
-                              const SizedBox(width: 8),
-                              Expanded(
-                                child: TextField(
-                                  decoration: InputDecoration(
-                                    hintText: "Tanggal Mulai (DD/MM/YYYY)",
-                                    hintStyle: const TextStyle(
-                                      fontFamily: 'Poppins',
-                                    ),
-                                    border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(16.0),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              const SizedBox(width: 8),
-                              Expanded(
-                                child: TextField(
-                                  decoration: InputDecoration(
-                                    hintText: "HH:MM",
-                                    hintStyle: const TextStyle(
-                                      fontFamily: 'Poppins',
-                                    ),
-                                    border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(16.0),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                          const SizedBox(height: 16),
-                          Row(
-                            children: [
-                              const Icon(Icons.calendar_today),
-                              const SizedBox(width: 8),
-                              Expanded(
-                                child: TextField(
-                                  decoration: InputDecoration(
-                                    hintText: "Hingga Tanggal (DD/MM/YYYY)",
-                                    hintStyle: const TextStyle(
-                                      fontFamily: 'Poppins',
-                                    ),
-                                    border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(16.0),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              const SizedBox(width: 8),
-                              Expanded(
-                                child: TextField(
-                                  decoration: InputDecoration(
-                                    hintText: "HH:MM",
-                                    hintStyle: const TextStyle(
-                                      fontFamily: 'Poppins',
-                                    ),
-                                    border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(16.0),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
+                  availibilityBox(),
                   const SizedBox(height: 16),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,

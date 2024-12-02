@@ -1,18 +1,77 @@
 import 'package:flutter/material.dart';
-import 'package:its_rent_hub/form_create.dart';
-import 'package:its_rent_hub/manage_room_details.dart';
+import 'package:its_rent_hub/api/api_globals.dart';
+import 'package:its_rent_hub/api/reservation.dart';
+import 'package:its_rent_hub/components/upperBar.dart';
+import 'package:its_rent_hub/models/reservation.dart';
+import 'package:its_rent_hub/view/login.dart';
+import 'package:its_rent_hub/view/room_search.dart';
+import 'package:its_rent_hub/view/reservation_details.dart';
 
-class HomePage1 extends StatelessWidget {
-  const HomePage1({super.key});
+class HomePage extends StatefulWidget {
+  const HomePage({super.key});
+
+  @override
+  _HomePageState createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  late List<MyReservationData>? reservation = [];
+  var isLoaded = false;
+
+  @override
+  void initState(){
+    super.initState();
+    _getData();
+  }
+
+  void _getData() async {
+    MyReservationResponse? response = await ReservationAPIService().myReservations();
+    if (response != null) {
+      setState(() {
+        reservation = response.data;
+        isLoaded = true;
+      });
+    } else {
+      setState(() {
+        isLoaded = false;
+      });
+    }
+  }
+
+  Color mapStatusToColor(String status) {
+    switch (status) {
+      case "Accepted":
+        return const Color.fromARGB(255, 24, 197, 24);
+      case "Rejected":
+        return const Color.fromARGB(255, 202, 20, 20);
+      case "Pending":
+        return const Color.fromARGB(255, 173, 121, 38);
+      default:
+        return const Color.fromARGB(255, 21, 136, 21);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
+    if (isAuthenticed == false) {
+      return const LoginPage();
+    }
+
     return LayoutBuilder(
       builder: (context, constraints) {
         bool isDesktop = constraints.maxWidth > 800;
 
         return Scaffold(
           appBar: AppBar(
+            title: const Text(
+              'Home',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 20,
+                fontFamily: 'Poppins',
+                fontWeight: FontWeight.w700,
+              ),
+            ),
             backgroundColor: Colors.blue,
             elevation: 0,
             leading: IconButton(
@@ -41,12 +100,27 @@ class HomePage1 extends StatelessWidget {
                             ),
                             child: Column(
                               children: [
-                                statusCard(context, "TW-501", 1, 60,
-                                    "20 November 2024", isDesktop),
-                                statusCard(context, "TW-401", 0, 60,
-                                    "20 November 2024", isDesktop),
-                                statusCard(context, "TW-301", 2, 60,
-                                    "20 November 2024", isDesktop),
+                                if (!isLoaded)
+                                  const Center(child: CircularProgressIndicator())
+                                else
+                                  ListView.builder(
+                                    shrinkWrap: true,
+                                    physics: const NeverScrollableScrollPhysics(),
+                                    itemCount: reservation!.length,
+                                    itemBuilder: (context, index) {
+                                      return statusCard(
+                                        context,
+                                        reservation![index].roomName,
+                                        reservation![index].roomPic,
+                                        reservation![index].status,
+                                        mapStatusToColor(reservation![index].status),
+                                        reservation![index].id,
+                                        reservation![index].capacity,
+                                        "${reservation![index].startDate}",
+                                        isDesktop,
+                                      );
+                                    },
+                                  )
                               ],
                             ),
                           ),
@@ -56,135 +130,14 @@ class HomePage1 extends StatelessWidget {
                   ],
                 ),
               ),
-              Positioned(
-                top: 0,
-                left: 0,
-                right: 0,
-                child: Container(
-                  height: isDesktop ? 280 : 200,
-                  width: double.infinity,
-                  decoration: const ShapeDecoration(
-                    color: Color.fromARGB(255, 10, 147, 241),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.only(
-                        bottomLeft: Radius.circular(43),
-                        bottomRight: Radius.circular(43),
-                      ),
-                    ),
-                  ),
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: isDesktop ? 100 : 16,
-                    ),
-                    child: LayoutBuilder(
-                      builder: (context, constraints) {
-                        double screenWidth = constraints.maxWidth;
-                        bool isSmallScreen = screenWidth < 600;
-
-                        return Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            const SizedBox(height: 20),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                // Greeting Text
-                                Expanded(
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        'Halo!',
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: isSmallScreen ? 20 : 28,
-                                          fontFamily: 'Poppins',
-                                          fontWeight: FontWeight.w700,
-                                        ),
-                                      ),
-                                      const SizedBox(height: 5),
-                                      Text(
-                                        'Bagaimana kabarmu hari ini?',
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: isSmallScreen ? 16 : 20,
-                                          fontFamily: 'Poppins',
-                                          fontWeight: FontWeight.w500,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                const SizedBox(
-                                    width: 10), // Space between text and avatar
-                                // Avatar
-                                CircleAvatar(
-                                  radius: isSmallScreen
-                                      ? 20
-                                      : 30, // Responsive size
-                                  backgroundColor: Colors.white,
-                                  backgroundImage:
-                                      const AssetImage('assets/profile.jpg'),
-                                ),
-                              ],
-                            ),
-                            const SizedBox(height: 20),
-                            // Search Bar
-                            Container(
-                              width: double.infinity,
-                              height: 50,
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 10),
-                              decoration: ShapeDecoration(
-                                color: Colors.white,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(20),
-                                ),
-                              ),
-                              child: Row(
-                                children: [
-                                  const Icon(
-                                    Icons.search,
-                                    color: Colors.black,
-                                  ),
-                                  const SizedBox(width: 10),
-                                  Expanded(
-                                    child: TextField(
-                                      decoration: InputDecoration(
-                                        hintText: 'Cari ruangan kamu',
-                                        hintStyle: TextStyle(
-                                          color: Colors.black.withOpacity(0.6),
-                                          fontSize: isSmallScreen ? 14 : 16,
-                                          fontFamily: 'Poppins',
-                                          fontWeight: FontWeight.w500,
-                                        ),
-                                        border: InputBorder.none,
-                                        contentPadding:
-                                            const EdgeInsets.symmetric(
-                                                vertical: 14),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        );
-                      },
-                    ),
-                  ),
-                ),
-              ),
+              upperBar(context, isDesktop)
             ],
           ),
           floatingActionButton: FloatingActionButton(
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => const FormCreatePage()),
+                MaterialPageRoute(builder: (context) => const RoomSearch()),
               );
             },
             backgroundColor: Colors.yellow,
@@ -195,8 +148,7 @@ class HomePage1 extends StatelessWidget {
     );
   }
 
-  Column statusCard(BuildContext context, String classroom, int status,
-      int capacity, String date, bool isDesktop) {
+  Column statusCard(BuildContext context, String roomname, String picturePath, String statusStr, Color statusColor, String reservationID, int capacity, String date, bool isDesktop) {
     return Column(
       children: [
         const SizedBox(height: 24),
@@ -241,20 +193,11 @@ class HomePage1 extends StatelessWidget {
                         width: 81,
                         height: 18,
                         decoration: BoxDecoration(
-                          color: status == 0
-                              ? const Color(0xFFCE2E2E)
-                              : status == 1
-                                  ? const Color(0xFF2ECE3B)
-                                  : const Color(0xFF2ECE83),
+                          color: statusColor,
                           borderRadius: BorderRadius.circular(8),
                         ),
                         alignment: Alignment.center,
-                        child: Text(
-                          status == 0
-                              ? "Tidak diterima"
-                              : status == 1
-                                  ? "Diterima"
-                                  : "Selesai",
+                        child: Text(statusStr,
                           style: const TextStyle(
                             color: Colors.white,
                             fontSize: 10,
@@ -276,12 +219,22 @@ class HomePage1 extends StatelessWidget {
                   ),
                   child: Row(
                     children: [
-                      Padding(
+                      Container(
                         padding: const EdgeInsets.only(left: 15),
-                        child: Image.asset(
-                          "assets/images/image-tw1.png",
-                          height: 75,
-                        ),
+                        child: 
+                          Image.network("$baseURL$picturePath",
+                            headers: const {
+                              "Content-Type": "application/json"
+                            },
+                            height: 75,
+                            errorBuilder: (BuildContext context, Object exception, StackTrace? stackTrace) {
+                              return const Icon(
+                                Icons.broken_image,
+                                color: Colors.red,
+                                size: 75,
+                              );
+                            },
+                          ),
                       ),
                       const SizedBox(width: 10),
                       Flexible(
@@ -291,7 +244,7 @@ class HomePage1 extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                classroom,
+                                roomname,
                                 style: const TextStyle(
                                   color: Colors.white,
                                   fontSize: 16,
@@ -344,7 +297,7 @@ class HomePage1 extends StatelessWidget {
                             context,
                             MaterialPageRoute(
                                 builder: (context) =>
-                                    const ManageRoomDetailsPage()),
+                                    ReservationDetailsPage(reservationID: reservationID,)),
                           );
                         },
                         style: ElevatedButton.styleFrom(

@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:its_rent_hub/form_create.dart';
-import 'package:its_rent_hub/home.dart';
-import 'package:its_rent_hub/manage_room_details.dart';
-import 'package:its_rent_hub/room_details.dart';
-import 'package:its_rent_hub/welcome_page.dart';
-import 'package:its_rent_hub/login.dart';
+import 'package:its_rent_hub/view/room_search.dart';
+import 'package:its_rent_hub/view/home.dart';
+import 'package:its_rent_hub/view/welcome.dart';
+import 'package:its_rent_hub/view/login.dart';
 
 void main() {
   runApp(const MyApp());
@@ -21,14 +19,13 @@ class MyApp extends StatelessWidget {
       routes: {
         '/welcome': (context) => const WelcomePage(),
         '/login': (context) => const LoginPage(),
-        '/home': (context) => const HomePage1(),
-        '/form': (context) => const FormCreatePage(),
-        '/roomDetails': (context) => const RoomDetailsPage(),
-        '/manageRoomDetails': (context) =>
-            const ManageRoomDetailsPage(), // New route
+        '/home': (context) => const HomePage(),
+        '/form': (context) => const RoomSearch(),
+        // '/roomDetails': (context) => const RoomDetailsPage(roomID: ''),
+        // '/manageRoomDetails': (context) => const ReservationDetailsPage(reservationID: ''), 
       },
       theme: ThemeData(
-        fontFamily: 'Poppins', // Set Poppins as the default font
+        fontFamily: 'Poppins',
       ),
     );
   }
