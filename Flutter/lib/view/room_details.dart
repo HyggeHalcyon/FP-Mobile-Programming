@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:its_rent_hub/api/api_globals.dart';
+import 'package:its_rent_hub/api/reservation.dart';
 import 'package:its_rent_hub/api/room.dart';
 import 'package:its_rent_hub/components/availability.dart';
+import 'package:its_rent_hub/models/reservation.dart';
 import 'package:its_rent_hub/models/room.dart';
 import 'package:its_rent_hub/view/home.dart';
 import 'package:its_rent_hub/view/login.dart';
@@ -19,6 +22,11 @@ class RoomDetailsPage extends StatefulWidget {
 class _RoomDetailsPageState extends State<RoomDetailsPage> {
   RoomDetailsData? room;
   var isLoaded = false;
+
+  TextEditingController cStartDate = TextEditingController();
+  TextEditingController cEndDate = TextEditingController();
+  TextEditingController cStartTime = TextEditingController();
+  TextEditingController cEndTime = TextEditingController();
 
   @override
   void initState(){
@@ -150,13 +158,53 @@ class _RoomDetailsPageState extends State<RoomDetailsPage> {
                     },
                   ),
                   const SizedBox(height: 16),
-                  availibilityBox(),
+                  availibilityBox(widget.roomID, cStartDate, cEndDate, cStartTime, cEndTime),
                   const SizedBox(height: 16),
                   SizedBox(
                     width: double.infinity,
                     child: ElevatedButton(
-                      onPressed: () {
-                        // Aksi tombol
+                      onPressed: () async {
+                        String start = '${cStartDate.text} ${cStartTime.text}';
+                        String end = '${cEndDate.text} ${cEndTime.text}';
+                        ReservationDetailsResponse? res = await ReservationAPIService().createReservation(widget.roomID, start, end);
+                        if (res == null) {
+                          Fluttertoast.showToast(
+                            msg: 'Error Making Request',
+                            toastLength: Toast.LENGTH_LONG,
+                            gravity: ToastGravity.CENTER,
+                            backgroundColor: Colors.red,
+                            textColor: Colors.white,
+                            timeInSecForIosWeb: 2,
+                            webPosition: "center",
+                            webBgColor: "linear-gradient(to right, #dc1c13, #dc1c13)",
+                          );
+                          return;
+                        }
+
+                        if (res.status == false) {
+                          Fluttertoast.showToast(
+                            msg: res.error ?? 'Failed to Reserve Room',
+                            toastLength: Toast.LENGTH_LONG,
+                            gravity: ToastGravity.CENTER,
+                            backgroundColor: Colors.red,
+                            textColor: Colors.white,
+                            timeInSecForIosWeb: 2,
+                            webPosition: "center",
+                            webBgColor: "linear-gradient(to right, #dc1c13, #dc1c13)",
+                          );
+                          return;
+                        }
+
+                        Fluttertoast.showToast(
+                          msg: 'Room Reservation Success',
+                          toastLength: Toast.LENGTH_LONG,
+                          gravity: ToastGravity.CENTER,
+                          backgroundColor: Colors.green,
+                          textColor: Colors.white,
+                          timeInSecForIosWeb: 2,
+                          webPosition: "center",
+                          webBgColor: "linear-gradient(to right, #19C63C, #19C63C)",
+                        );
                         Navigator.push(
                           context,
                           MaterialPageRoute(

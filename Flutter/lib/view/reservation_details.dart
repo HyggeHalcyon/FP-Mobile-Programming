@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:its_rent_hub/api/api_globals.dart';
+import 'package:its_rent_hub/api/reservation.dart';
 import 'package:its_rent_hub/components/availability.dart';
 import 'package:its_rent_hub/models/reservation.dart';
+import 'package:its_rent_hub/view/home.dart';
 import 'package:its_rent_hub/view/login.dart';
 
 class ReservationDetailsPage extends StatefulWidget {
@@ -14,8 +17,13 @@ class ReservationDetailsPage extends StatefulWidget {
 }
 
 class _ReservationDetailsPageState extends State<ReservationDetailsPage> {
-  MyReservationData? room;
+  ReservationDetailsData? res;
   var isLoaded = false;
+
+  TextEditingController cStartDate = TextEditingController();
+  TextEditingController cEndDate = TextEditingController();
+  TextEditingController cStartTime = TextEditingController();
+  TextEditingController cEndTime = TextEditingController();
 
   @override
   void initState(){
@@ -23,8 +31,18 @@ class _ReservationDetailsPageState extends State<ReservationDetailsPage> {
     _getData(widget.reservationID);
   }
 
-  void _getData(roomID) async {
-    
+  void _getData(reservationID) async {
+    ReservationDetailsResponse? response = await ReservationAPIService().reservationDetails(reservationID);
+    if (response != null) {
+      setState(() {
+        res = response.data;
+        isLoaded = true;
+      });
+    } else {
+      setState(() {
+        isLoaded = false;
+      });
+    }
   }
 
   @override
@@ -68,20 +86,20 @@ class _ReservationDetailsPageState extends State<ReservationDetailsPage> {
                     bottomRight: Radius.circular(16),
                   ),
                 ),
-                child: const Column(
+                child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "Research Center",
-                      style: TextStyle(
+                      "${res?.roomName}",
+                      style: const TextStyle(
                         color: Colors.white,
                         fontSize: 28,
                         fontFamily: 'Poppins',
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    SizedBox(height: 8),
-                    Text(
+                    const SizedBox(height: 8),
+                    const Text(
                       "Yuk, booking ruangan di sini!",
                       style: TextStyle(
                           color: Colors.white,
@@ -98,14 +116,14 @@ class _ReservationDetailsPageState extends State<ReservationDetailsPage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const SizedBox(height: 16),
-                  const Text(
-                    "Lokasi: Gedung Research Center",
-                    style: TextStyle(fontSize: 16, fontFamily: 'Poppins'),
+                  Text(
+                    "Lokasi: ${res?.location ?? ''}",
+                    style: const TextStyle(fontSize: 16, fontFamily: 'Poppins'),
                   ),
                   const SizedBox(height: 8),
-                  const Text(
-                    "Kapasitas: 120",
-                    style: TextStyle(fontSize: 16, fontFamily: 'Poppins'),
+                  Text(
+                    "Kapasitas: ${res?.capacity ?? ''}",
+                    style: const TextStyle(fontSize: 16, fontFamily: 'Poppins'),
                   ),
                   const SizedBox(height: 8),
                   const Text(
@@ -116,30 +134,74 @@ class _ReservationDetailsPageState extends State<ReservationDetailsPage> {
                         fontFamily: 'Poppins'),
                   ),
                   const SizedBox(height: 4),
-                  const Text("• Microphone",
-                      style: TextStyle(
-                        fontFamily: 'Poppins',
-                      )),
-                  const Text("• LCD Screen",
-                      style: TextStyle(
-                        fontFamily: 'Poppins',
-                      )),
-                  const Text("• Speaker",
-                      style: TextStyle(
-                        fontFamily: 'Poppins',
-                      )),
-                  const Text("• Microphone",
-                      style: TextStyle(
-                        fontFamily: 'Poppins',
-                      )),
+                  ListView.builder(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: res?.facilities?.length ?? 0,
+                    itemBuilder: (context, index) {
+                        return Text("• ${res?.facilities?[index] ?? ''}",
+                          style: const TextStyle(
+                            fontFamily: 'Poppins'
+                          ),
+                        );
+                    },
+                  ),
                   const SizedBox(height: 16),
-                  availibilityBox(),
+                  availibilityBox(res?.roomId, cStartDate, cEndDate, cStartTime, cEndTime),
                   const SizedBox(height: 16),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () async {
+                          print("update button pressed");
+                          String start = '${cStartDate.text} ${cStartTime.text}';
+                          String end = '${cEndDate.text} ${cEndTime.text}';
+                          ReservationDetailsResponse? res = await ReservationAPIService().updateReservation(widget.reservationID, start, end);
+                          if (res == null) {
+                            Fluttertoast.showToast(
+                              msg: 'Error Making Request',
+                              toastLength: Toast.LENGTH_LONG,
+                              gravity: ToastGravity.CENTER,
+                              backgroundColor: Colors.red,
+                              textColor: Colors.white,
+                              timeInSecForIosWeb: 2,
+                              webPosition: "center",
+                              webBgColor: "linear-gradient(to right, #dc1c13, #dc1c13)",
+                            );
+                            return;
+                          }
+
+                          if (res.status == false) {
+                            Fluttertoast.showToast(
+                              msg: res.error ?? 'Failed to Update Reservation',
+                              toastLength: Toast.LENGTH_LONG,
+                              gravity: ToastGravity.CENTER,
+                              backgroundColor: Colors.red,
+                              textColor: Colors.white,
+                              timeInSecForIosWeb: 2,
+                              webPosition: "center",
+                              webBgColor: "linear-gradient(to right, #dc1c13, #dc1c13)",
+                            );
+                            return;
+                          }
+
+                          Fluttertoast.showToast(
+                            msg: 'Room Reservation Updated',
+                            toastLength: Toast.LENGTH_LONG,
+                            gravity: ToastGravity.CENTER,
+                            backgroundColor: Colors.green,
+                            textColor: Colors.white,
+                            timeInSecForIosWeb: 2,
+                            webPosition: "center",
+                            webBgColor: "linear-gradient(to right, #19C63C, #19C63C)",
+                          );
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const HomePage()),
+                          );
+                        },
                         style: ElevatedButton.styleFrom(
                           padding: const EdgeInsets.symmetric(
                               vertical: 16.0, horizontal: 24.0),
@@ -158,7 +220,54 @@ class _ReservationDetailsPageState extends State<ReservationDetailsPage> {
                         ),
                       ),
                       ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () async {
+                          print("delete button pressed");
+                          DeleteReservationResponse? res = await ReservationAPIService().deleteReservation(widget.reservationID);
+                          if (res == null) {
+                            Fluttertoast.showToast(
+                              msg: 'Error Making Request',
+                              toastLength: Toast.LENGTH_LONG,
+                              gravity: ToastGravity.CENTER,
+                              backgroundColor: Colors.red,
+                              textColor: Colors.white,
+                              timeInSecForIosWeb: 2,
+                              webPosition: "center",
+                              webBgColor: "linear-gradient(to right, #dc1c13, #dc1c13)",
+                            );
+                            return;
+                          }
+
+                          if (res.status == false) {
+                            Fluttertoast.showToast(
+                              msg: res.error ?? 'Failed to Delete',
+                              toastLength: Toast.LENGTH_LONG,
+                              gravity: ToastGravity.CENTER,
+                              backgroundColor: Colors.red,
+                              textColor: Colors.white,
+                              timeInSecForIosWeb: 2,
+                              webPosition: "center",
+                              webBgColor: "linear-gradient(to right, #dc1c13, #dc1c13)",
+                            );
+                            return;
+                          }
+
+                          Fluttertoast.showToast(
+                            msg: 'Delete Success',
+                            toastLength: Toast.LENGTH_LONG,
+                            gravity: ToastGravity.CENTER,
+                            backgroundColor: Colors.green,
+                            textColor: Colors.white,
+                            timeInSecForIosWeb: 2,
+                            webPosition: "center",
+                            webBgColor: "linear-gradient(to right, #19C63C, #19C63C)",
+                          );
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const HomePage(),
+                            ),
+                          );
+                        },
                         style: ElevatedButton.styleFrom(
                           padding: const EdgeInsets.symmetric(
                               vertical: 16.0, horizontal: 24.0),

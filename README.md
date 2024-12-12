@@ -12,7 +12,7 @@ PS D:\git\FP-Mobile-Programming\Backend> docker compose up -d
 ```ps
 PS D:\git\FP-Mobile-Programming\Backend> cp .env.example .env
 ```
-then make sure to setup `.env` in accordance to your local setup or you
+then make sure to setup `.env` in accordance to your local setup
 
 ```ps
 PS D:\git\FP-Mobile-Programming> cd .\Backend\
