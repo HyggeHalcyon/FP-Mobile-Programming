@@ -34,12 +34,12 @@ func (r *Reservation) UnmarshalJSON(data []byte) error {
 		return err
 	}
 
-	startDate, err := time.Parse(dto.RESERVATION_TIME_FORMAT, aux.StartDate)
+	startDate, err := time.ParseInLocation(dto.RESERVATION_TIME_FORMAT, aux.StartDate, time.Now().UTC().Location())
 	if err != nil {
 		return err
 	}
 
-	endDate, err := time.Parse(dto.RESERVATION_TIME_FORMAT, aux.EndDate)
+	endDate, err := time.ParseInLocation(dto.RESERVATION_TIME_FORMAT, aux.EndDate, time.Now().UTC().Location())
 	if err != nil {
 		return err
 	}

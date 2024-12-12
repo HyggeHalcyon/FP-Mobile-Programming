@@ -46,7 +46,7 @@ func (c *reservationController) GetMyReservations(ctx *gin.Context) {
 }
 
 func (c *reservationController) CheckAvailability(ctx *gin.Context) {
-	var req dto.CreateReservationRequest
+	var req dto.ReservationRequest
 	if err := ctx.ShouldBind(&req); err != nil {
 		res := utils.BuildResponseFailed(dto.MESSAGE_FAILED_GET_DATA_FROM_BODY, err.Error(), nil)
 		ctx.AbortWithStatusJSON(http.StatusBadRequest, res)
@@ -67,7 +67,7 @@ func (c *reservationController) CheckAvailability(ctx *gin.Context) {
 func (c *reservationController) CreateReservation(ctx *gin.Context) {
 	userID := ctx.MustGet(constants.CTX_KEY_USER_ID).(string)
 
-	var req dto.CreateReservationRequest
+	var req dto.ReservationRequest
 	if err := ctx.ShouldBind(&req); err != nil {
 		res := utils.BuildResponseFailed(dto.MESSAGE_FAILED_GET_DATA_FROM_BODY, err.Error(), nil)
 		ctx.AbortWithStatusJSON(http.StatusBadRequest, res)

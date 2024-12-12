@@ -30,7 +30,7 @@ func main() {
 
 		userService        service.UserService        = service.NewUserService(userRepository)
 		roomService        service.RoomService        = service.NewRoomService(roomRepository, facilityRepository)
-		reservationService service.ReservationService = service.NewReservationService(roomRepository, reservationRepo)
+		reservationService service.ReservationService = service.NewReservationService(roomRepository, reservationRepo, facilityRepository)
 
 		userController        controller.UserController        = controller.NewUserController(userService, jwtService)
 		roomController        controller.RoomController        = controller.NewRoomController(roomService)
@@ -41,7 +41,7 @@ func main() {
 	server.Use(middleware.CORSMiddleware())
 	filegroup := server.Group("/api/file")
 	{
-		filegroup.Use(middleware.Authenticate(jwtService))
+		// filegroup.Use(middleware.Authenticate(jwtService))
 		filegroup.StaticFS("", http.Dir("./files"))
 	}
 

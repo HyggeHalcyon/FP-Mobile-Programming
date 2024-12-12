@@ -11,7 +11,7 @@ import (
 func Reservation(route *gin.Engine, reservationController controller.ReservationController, jwtService config.JWTService) {
 	routes := route.Group("/api/reservation")
 	{
-		// routes.POST("/check", middleware.Authenticate(jwtService))
+		routes.POST("/check", middleware.Authenticate(jwtService), reservationController.CheckAvailability)
 		routes.POST("", middleware.Authenticate(jwtService), reservationController.CreateReservation)
 		routes.GET("", middleware.Authenticate(jwtService), reservationController.GetMyReservations)
 		routes.GET("/:id", middleware.Authenticate(jwtService), reservationController.GetDetails)

@@ -11,7 +11,7 @@ type (
 	RerservationRepository interface {
 		GetByID(string) (entity.Reservation, error)
 		GetByUserID(string) ([]entity.Reservation, error)
-		GetByIDAndAfterStartDate(string, time.Time) ([]entity.Reservation, error)
+		FindOverlapping(string, time.Time, time.Time) (bool, error)
 		Create(entity.Reservation) (entity.Reservation, error)
 		Update(entity.Reservation) error
 		DeleteByID(string) error
@@ -38,15 +38,42 @@ func (r *reservationRepository) GetByUserID(userID string) ([]entity.Reservation
 	return reservation, nil
 }
 
-func (r *reservationRepository) GetByIDAndAfterStartDate(roomID string, start time.Time) ([]entity.Reservation, error) {
-	var reservation []entity.Reservation
+func (r *reservationRepository) FindOverlapping(roomID string, start time.Time, end time.Time) (bool, error) {
+	var reservation entity.Reservation
 
-	tx := r.db.Where("room_id = ? AND start_date >= ?", roomID, start).First(&reservation)
+	tx := r.db.Where("room_id = ? AND (start_date <= ? AND end_date >= ?)", roomID, start, end).First(&reservation)
 	if tx.Error != nil && tx.Error != gorm.ErrRecordNotFound {
-		return nil, tx.Error
+		return false, tx.Error
+	}
+	if tx.RowsAffected != 0 {
+		return false, nil
 	}
 
-	return reservation, nil
+	tx = r.db.Where("room_id = ? AND (start_date >= ? AND end_date <= ?)", roomID, start, end).First(&reservation)
+	if tx.Error != nil && tx.Error != gorm.ErrRecordNotFound {
+		return false, tx.Error
+	}
+	if tx.RowsAffected != 0 {
+		return false, nil
+	}
+
+	tx = r.db.Where("room_id = ? AND (start_date >= ? AND start_date <= ?)", roomID, start, end).First(&reservation)
+	if tx.Error != nil && tx.Error != gorm.ErrRecordNotFound {
+		return false, tx.Error
+	}
+	if tx.RowsAffected != 0 {
+		return false, nil
+	}
+
+	tx = r.db.Where("room_id = ? AND (end_date >= ? AND end_date <= ?)", roomID, start, end).First(&reservation)
+	if tx.Error != nil && tx.Error != gorm.ErrRecordNotFound {
+		return false, tx.Error
+	}
+	if tx.RowsAffected != 0 {
+		return false, nil
+	}
+
+	return true, nil
 }
 
 func (r *reservationRepository) Create(reservation entity.Reservation) (entity.Reservation, error) {
