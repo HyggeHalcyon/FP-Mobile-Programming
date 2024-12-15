@@ -8,7 +8,7 @@ Positioned upperBar(context, isDesktop) {
     right: 0,
     child: Container(
       height: MediaQuery.of(context).size.height *
-          0.28, // 26% of screen height
+          0.15,
       width: double.infinity,
       decoration: const ShapeDecoration(
         color: Color.fromARGB(255, 10, 147, 241),
@@ -21,7 +21,7 @@ Positioned upperBar(context, isDesktop) {
       ),
       child: Padding(
         padding: EdgeInsets.symmetric(
-          horizontal: isDesktop ? 100 : 16,
+          horizontal: isDesktop ? 50 : 16,
         ),
         child: LayoutBuilder(
           builder: (context, constraints) {
@@ -32,7 +32,7 @@ Positioned upperBar(context, isDesktop) {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const SizedBox(height: 20),
+                const SizedBox(height: 10),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -82,46 +82,46 @@ Positioned upperBar(context, isDesktop) {
                     ),
                   ],
                 ),
-                const SizedBox(height: 20),
+                // const SizedBox(height: 20),
                 // Search Bar
-                Container(
-                  width: double.infinity,
-                  height: 50,
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 10),
-                  decoration: ShapeDecoration(
-                    color: Colors.white,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                  ),
-                  child: Row(
-                    children: [
-                      const Icon(
-                        Icons.search,
-                        color: Colors.black,
-                      ),
-                      const SizedBox(width: 10),
-                      Expanded(
-                        child: TextField(
-                          decoration: InputDecoration(
-                            hintText: 'Cari ruangan kamu',
-                            hintStyle: TextStyle(
-                              color: Colors.black.withOpacity(0.6),
-                              fontSize: isSmallScreen ? 14 : 16,
-                              fontFamily: 'Poppins',
-                              fontWeight: FontWeight.w500,
-                            ),
-                            border: InputBorder.none,
-                            contentPadding:
-                                const EdgeInsets.symmetric(
-                                    vertical: 14),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
+                // Container(
+                //   width: double.infinity,
+                //   height: 50,
+                //   padding:
+                //       const EdgeInsets.symmetric(horizontal: 10),
+                //   decoration: ShapeDecoration(
+                //     color: Colors.white,
+                //     shape: RoundedRectangleBorder(
+                //       borderRadius: BorderRadius.circular(20),
+                //     ),
+                //   ),
+                //   child: const Row(
+                //     children: [
+                //       Icon(
+                //         Icons.search,
+                //         color: Colors.black,
+                //       ),
+                //       SizedBox(width: 10),
+                //       // Expanded(
+                //       //   child: TextField(
+                //       //     decoration: InputDecoration(
+                //       //       hintText: 'Cari ruangan kamu',
+                //       //       hintStyle: TextStyle(
+                //       //         color: Colors.black.withOpacity(0.6),
+                //       //         fontSize: isSmallScreen ? 14 : 16,
+                //       //         fontFamily: 'Poppins',
+                //       //         fontWeight: FontWeight.w500,
+                //       //       ),
+                //       //       border: InputBorder.none,
+                //       //       contentPadding:
+                //       //           const EdgeInsets.symmetric(
+                //       //               vertical: 14),
+                //       //     ),
+                //       //   ),
+                //       // ),
+                //     ],
+                //   ),
+                // ),
               ],
             );
           },

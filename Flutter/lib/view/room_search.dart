@@ -75,7 +75,7 @@ class _RoomSearchState extends State<RoomSearch> {
                 SingleChildScrollView(
                   child: Padding(
                     padding: EdgeInsets.only(
-                        top: isDesktop ? 280 : 200, bottom: 16), // Responsive
+                        top: isDesktop ? 100 : 100, bottom: 16), 
                     child: Column(
                       children: rooms!.map((room) {
                         return Padding(

@@ -90,7 +90,7 @@ class _HomePageState extends State<HomePage> {
                       color: Colors.white,
                       child: Padding(
                         padding: EdgeInsets.only(
-                          top: isDesktop ? 280 : 200, // Adjust top padding
+                          top: isDesktop ? 100 : 100, // Adjust top padding
                           bottom: 20,
                         ),
                         child: Center(
