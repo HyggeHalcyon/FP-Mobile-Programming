@@ -248,5 +248,9 @@ func (s *reservationService) Delete(id, userID string) error {
 		return dto.ErrPastReservation
 	}
 
+	if reservation.Status != dto.ENUM_RESERVATION_STATUS_PENDING {
+		return dto.ErrReservationProcessed
+	}
+
 	return s.reservationRepo.DeleteByID(id)
 }
