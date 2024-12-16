@@ -197,7 +197,7 @@ class CheckReservationResponse {
         status: json["status"],
         message: json["message"],
         error: json["error"],
-        data:  json["error"] != null ? CheckReservationData.fromJson(json["data"]) : null,
+        data:  json["error"] == null ? CheckReservationData.fromJson(json["data"]) : null,
     );
 
     Map<String, dynamic> toJson() => {

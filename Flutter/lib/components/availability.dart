@@ -130,9 +130,9 @@ Card availibilityBox(roomID, TextEditingController cStartDate, TextEditingContro
                   return;
                 }
 
-                if (res.data?.available ?? false) {
+                if (res.status == false) {
                   Fluttertoast.showToast(
-                    msg: 'Unavailable',
+                    msg: res.error ?? 'Failed to Check Availability',
                     toastLength: Toast.LENGTH_LONG,
                     gravity: ToastGravity.CENTER,
                     backgroundColor: Colors.red,
@@ -144,7 +144,8 @@ Card availibilityBox(roomID, TextEditingController cStartDate, TextEditingContro
                   return;
                 }
 
-                Fluttertoast.showToast(
+                if (res.data?.available ?? false) {
+                  Fluttertoast.showToast(
                   msg: 'Available',
                   toastLength: Toast.LENGTH_LONG,
                   gravity: ToastGravity.CENTER,
@@ -153,6 +154,19 @@ Card availibilityBox(roomID, TextEditingController cStartDate, TextEditingContro
                   timeInSecForIosWeb: 2,
                   webPosition: "center",
                   webBgColor: "linear-gradient(to right, #19C63C, #19C63C)",
+                );
+                  return;
+                }
+
+                Fluttertoast.showToast(
+                  msg: 'Unavailable',
+                  toastLength: Toast.LENGTH_LONG,
+                  gravity: ToastGravity.CENTER,
+                  backgroundColor: Colors.red,
+                  textColor: Colors.white,
+                  timeInSecForIosWeb: 2,
+                  webPosition: "center",
+                  webBgColor: "linear-gradient(to right, #dc1c13, #dc1c13)",
                 );
               },
               style: ElevatedButton.styleFrom(
