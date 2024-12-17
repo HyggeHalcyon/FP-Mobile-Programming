@@ -37,6 +37,12 @@ class _ReservationDetailsPageState extends State<ReservationDetailsPage> {
       setState(() {
         res = response.data;
         isLoaded = true;
+        List<String>? start = res?.startDate.split(" ");
+        List<String>? end = res?.endDate.split(" ");
+        cStartDate.text = start?[0] ?? '';
+        cEndDate.text = end?[0] ?? '';
+        cStartTime.text = start?[1] ?? '';
+        cEndTime.text = end?[1] ?? '';
       });
     } else {
       setState(() {
