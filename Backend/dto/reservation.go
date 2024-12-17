@@ -44,12 +44,6 @@ type (
 		EndDate   string `json:"end_date" binding:"required"`
 	}
 
-	UpdateReservationRequest struct {
-		ID        string `json:"id" binding:"required"`
-		StartDate string `json:"start_date"`
-		EndDate   string `json:"end_date"`
-	}
-
 	MyReservationResponse struct {
 		ID        string `json:"id"`
 		Status    string `json:"status"`

@@ -130,9 +130,22 @@ func (c *reservationController) DeleteReservation(ctx *gin.Context) {
 func (c *reservationController) UpdateReservation(ctx *gin.Context) {
 	userID := ctx.MustGet(constants.CTX_KEY_USER_ID).(string)
 
-	var req dto.UpdateReservationRequest
+	var req dto.ReservationRequest
 	if err := ctx.ShouldBind(&req); err != nil {
 		res := utils.BuildResponseFailed(dto.MESSAGE_FAILED_GET_DATA_FROM_BODY, err.Error(), nil)
+		ctx.AbortWithStatusJSON(http.StatusBadRequest, res)
+		return
+	}
+
+	status, err := c.reservationService.CheckAvailability(req)
+	if err != nil {
+		res := utils.BuildResponseFailed(dto.MESSAGE_FAILED_UPDATE_RESERVATION, err.Error(), nil)
+		ctx.AbortWithStatusJSON(http.StatusBadRequest, res)
+		return
+	}
+
+	if !status.Available {
+		res := utils.BuildResponseFailed(dto.MESSAGE_FAILED_UPDATE_RESERVATION, dto.ErrRoomNotAvailable.Error(), nil)
 		ctx.AbortWithStatusJSON(http.StatusBadRequest, res)
 		return
 	}

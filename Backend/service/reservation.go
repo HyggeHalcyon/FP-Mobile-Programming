@@ -14,7 +14,7 @@ type (
 		CheckAvailability(dto.ReservationRequest) (dto.ReservationAvailabilityResponse, error)
 		MakeReservation(string, dto.ReservationRequest) (dto.ReservationResponse, error)
 		GetMyReservations(string) ([]dto.MyReservationResponse, error)
-		Update(string, dto.UpdateReservationRequest) (dto.ReservationResponse, error)
+		Update(string, dto.ReservationRequest) (dto.ReservationResponse, error)
 		GetDetails(string) (dto.ReservationResponse, error)
 		Delete(string, string) error
 	}
@@ -166,7 +166,7 @@ func (s *reservationService) GetDetails(id string) (dto.ReservationResponse, err
 	return ret, nil
 }
 
-func (s *reservationService) Update(userID string, req dto.UpdateReservationRequest) (dto.ReservationResponse, error) {
+func (s *reservationService) Update(userID string, req dto.ReservationRequest) (dto.ReservationResponse, error) {
 	reservation, err := s.reservationRepo.GetByID(req.ID)
 	if err != nil {
 		return dto.ReservationResponse{}, err
@@ -192,7 +192,7 @@ func (s *reservationService) Update(userID string, req dto.UpdateReservationRequ
 		RoomID: reservation.RoomID.String(),
 	}
 
-	if req.StartDate != "" {
+	if req.StartDate != "" { // when previously it was optional
 		startDate, err := time.ParseInLocation(dto.RESERVATION_TIME_FORMAT, req.StartDate, time.Now().UTC().Location())
 		if err != nil {
 			return dto.ReservationResponse{}, dto.ErrInvalidTimeFormat
@@ -206,7 +206,7 @@ func (s *reservationService) Update(userID string, req dto.UpdateReservationRequ
 		ret.StartDate = startDate.Format(dto.RESERVATION_TIME_FORMAT)
 	}
 
-	if req.EndDate != "" {
+	if req.EndDate != "" { // when previously it was optional
 		endDate, err := time.ParseInLocation(dto.RESERVATION_TIME_FORMAT, req.EndDate, time.Now().UTC().Location())
 		if err != nil {
 			return dto.ReservationResponse{}, dto.ErrInvalidTimeFormat
