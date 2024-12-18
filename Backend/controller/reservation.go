@@ -137,19 +137,6 @@ func (c *reservationController) UpdateReservation(ctx *gin.Context) {
 		return
 	}
 
-	status, err := c.reservationService.CheckAvailability(req)
-	if err != nil {
-		res := utils.BuildResponseFailed(dto.MESSAGE_FAILED_UPDATE_RESERVATION, err.Error(), nil)
-		ctx.AbortWithStatusJSON(http.StatusBadRequest, res)
-		return
-	}
-
-	if !status.Available {
-		res := utils.BuildResponseFailed(dto.MESSAGE_FAILED_UPDATE_RESERVATION, dto.ErrRoomNotAvailable.Error(), nil)
-		ctx.AbortWithStatusJSON(http.StatusBadRequest, res)
-		return
-	}
-
 	result, err := c.reservationService.Update(userID, req)
 	if err != nil {
 		res := utils.BuildResponseFailed(dto.MESSAGE_FAILED_UPDATE_RESERVATION, err.Error(), nil)
