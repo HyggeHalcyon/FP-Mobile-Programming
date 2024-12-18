@@ -17,6 +17,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   late List<MyReservationData>? reservation = [];
   var isLoaded = false;
+  var isEmpty = false;
 
   @override
   void initState(){
@@ -28,6 +29,9 @@ class _HomePageState extends State<HomePage> {
     MyReservationResponse? response = await ReservationAPIService().myReservations();
     if (response != null) {
       setState(() {
+        if (response.data == null || response.data!.isEmpty) {
+          isEmpty = true;
+        }
         reservation = response.data;
         isLoaded = true;
       });
@@ -105,11 +109,24 @@ class _HomePageState extends State<HomePage> {
                               children: [
                                 if (!isLoaded)
                                   const Center(child: CircularProgressIndicator())
+                                else if (isEmpty) 
+                                  Container(
+                                    padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 32),
+                                    child: const Text(
+                                      "Tidak ada peminjaman",
+                                      style: TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 14,
+                                        fontFamily: 'Poppins',
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    ),
+                                  )
                                 else
                                   ListView.builder(
                                     shrinkWrap: true,
                                     physics: const NeverScrollableScrollPhysics(),
-                                    itemCount: reservation!.length,
+                                    itemCount: reservation?.length,
                                     itemBuilder: (context, index) {
                                       return statusCard(
                                         context,
